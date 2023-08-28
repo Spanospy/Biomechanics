@@ -1,6 +1,7 @@
 package flaxbeard.cyberware.registry;
 
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -15,12 +16,12 @@ import java.util.function.Supplier;
 import static flaxbeard.cyberware.Cyberware.MODID;
 
 public class SpawnPlacementRegistryImpl{
-    private static final List<EntityType<Mob>> entityTypes = new ArrayList<>();
+    private static final List<EntityType> entityTypes = new ArrayList<>();
     private static final List<SpawnPlacements.Type> types = new ArrayList<>();
     private static final List<Heightmap.Types> heightmapTypes = new ArrayList<>();
-    private static final List<SpawnPlacements.SpawnPredicate<Mob>> spawnPredicates = new ArrayList<>();
+    private static final List<SpawnPlacements.SpawnPredicate> spawnPredicates = new ArrayList<>();
 
-    public static void register(Supplier<? extends EntityType<Mob>> entityType, SpawnPlacements.Type type, Heightmap.Types heightmapType, SpawnPlacements.SpawnPredicate<Mob> spawnPredicate) {
+    public static <T extends Mob> void register(Supplier<? extends EntityType<T>> entityType, SpawnPlacements.Type type, Heightmap.Types heightmapType, SpawnPlacements.SpawnPredicate<T> spawnPredicate) {
         entityTypes.add(entityType.get());
         types.add(type);
         heightmapTypes.add(heightmapType);

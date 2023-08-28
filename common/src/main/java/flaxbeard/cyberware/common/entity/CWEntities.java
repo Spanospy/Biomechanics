@@ -42,7 +42,7 @@ public class CWEntities {
         EntityAttributeRegistry.register(CYBER_ZOMBIE, CyberZombie::createAttributes);
         EntityAttributeRegistry.register(BRUTE_CYBER_ZOMBIE, BruteCyberZombie::createAttributes);
 
-        SpawnPlacementRegistry.register(CWEntities.CYBER_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
-        SpawnPlacementRegistry.register(CWEntities.BRUTE_CYBER_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
+        SpawnPlacementRegistry.register(CYBER_ZOMBIE, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
+        SpawnPlacementRegistry.register(BRUTE_CYBER_ZOMBIE, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
     }
 }
