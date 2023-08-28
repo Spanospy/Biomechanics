@@ -9,12 +9,11 @@ import net.minecraft.world.entity.monster.Zombie;
 
 import static flaxbeard.cyberware.Cyberware.MODID;
 
-public class CyberZombieLayer<T extends Zombie, M extends ZombieModel<T>> extends EyesLayer<T, M> {
-    private static final RenderType HIGHTLIGHT = RenderType.eyes(new ResourceLocation(MODID, "textures/entity/cyber_zombie_highlight.png"));
-
-    public CyberZombieLayer(RenderLayerParent<T, M> renderLayerParent) {
+public class BruteCyberZombieLayer <T extends Zombie, M extends ZombieModel<T>> extends EyesLayer<T, M> {
+    public BruteCyberZombieLayer(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
     }
+    private static final RenderType HIGHTLIGHT = RenderType.eyes(new ResourceLocation(MODID, "textures/entity/brute_cyber_zombie_highlight.png"));
 
     @Override
     public RenderType renderType() {
