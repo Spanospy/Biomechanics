@@ -15,6 +15,9 @@
   "entrypoints": {
     "main": [
       "flaxbeard.cyberware.CyberwareFabric"
+    ],
+    "client": [
+      "flaxbeard.cyberware.CyberwareFabricClient"
     ]
   },
   "mixins": [
