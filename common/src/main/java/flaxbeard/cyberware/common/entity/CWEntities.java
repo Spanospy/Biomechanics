@@ -3,10 +3,14 @@ package flaxbeard.cyberware.common.entity;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
+import flaxbeard.cyberware.registry.SpawnPlacementRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import static flaxbeard.cyberware.Cyberware.MANAGER;
 import static flaxbeard.cyberware.Cyberware.MODID;
@@ -37,5 +41,8 @@ public class CWEntities {
     public static void init(){
         EntityAttributeRegistry.register(CYBER_ZOMBIE, CyberZombie::createAttributes);
         EntityAttributeRegistry.register(BRUTE_CYBER_ZOMBIE, BruteCyberZombie::createAttributes);
+
+        SpawnPlacementRegistry.register(CWEntities.CYBER_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
+        SpawnPlacementRegistry.register(CWEntities.BRUTE_CYBER_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
     }
 }
