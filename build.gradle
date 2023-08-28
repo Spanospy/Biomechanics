@@ -1,307 +1,43 @@
-// ***************************************************************************** //
-// build.gradle
-// for versioning see gradle.properties
-//
-// ***************************************************************************** //
-buildscript {
+plugins {
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
+}
 
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+architectury {
+    minecraft = rootProject.minecraft_version
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
     }
 
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.1.2"
-        classpath "com.wynprice.cursemaven:CurseMaven:1.2.3"
-    }
-
-}
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "com.matthewprenger.cursegradle"
-apply plugin: "com.wynprice.cursemaven"
-
-// ***************************************************************************** //
-//  Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-// ***************************************************************************** //
-repositories {
-    mavenCentral()
-    maven {
-        name = "JitPack"
-        url = 'https://jitpack.io'
-    }
-    maven {
-        name = "jei"
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "modmaven.k-4u.nl"
-    }
-    maven {
-        name = "CoFH Maven"
-        url = "http://maven.covers1624.net"
-    }
-    maven {
-        name = "MC Mod Devs"
-        url = 'http://maven.mcmoddev.com'
-    }
-    maven {
-        name = 'CurseForge'
-        url = 'https://minecraft.curseforge.com/api/maven/'
-    }
-    maven { // The One Probe, EnderIO, EnderCore
-        name 'tterrag'
-        url 'http://maven.tterrag.com/'
-    }
-    maven { // The One Probe, EnderIO, EnderCore
-        name 'tterrag2'
-        url 'http://maven2.tterrag.com/'
-    }
-    maven {
-        name "CraftTweaker, Vazkii's Botania, etc."
-        url "http://maven.blamejared.com/"
-    }
-    //maven {
-    //    name = "mobius"
-    //    url = "http://mobiusstrip.eu/maven"
-    //}
-    //maven {
-    //    name = "applecore"
-    //    url = "http://www.ryanliptak.com/maven/"
-    //}
-    //maven {
-    //    name = "tesla"
-    //    url = "http://maven.epoxide.xyz"
-    //}
-    //maven {
-    //    name = "chickenbones"
-    //    url = "http://chickenbones.net/maven/"
-    //}
-    //maven {
-    //    name = "TehNut"
-    //    url = "http://tehnut.info/maven/"
-    //}
-    //maven {
-    //    name = "ic2"
-    //    url = "http://maven.ic2.player.to/"
-    //}
-    //maven {
-    //    name = "Modmuss50"
-    //    url = "http://maven.modmuss50.me/"
-    //}
-    //ivy {
-    //    name = "CraftTweaker"
-    //    artifactPattern "https://addons-origin.cursecdn.com/files/2392/421/[module]-[revision](-[classifier]).[ext]"
-    //}
-    //maven {
-    //    name = "PrimalCore"
-    //    url = "https://maven.nmd.so"
-    //}
-    mavenLocal()
-}
-
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'maven'
-//apply plugin: 'git'
-//apply plugin: 'java'
-
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8 // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-configurations {
-    deployerJars
-}
-
-// http://maven.apache.org/guides/mini/guide-naming-conventions.html
-group = "${mod_group}"
-version = "${mc_version}-${mod_version}" + buildNumber()
-archivesBaseName = "${mod_name}"
-
-minecraft {
-    version = "${mc_version}" + "-" + "${forge_version}"
-    runDir = "run"
-
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    //mappings = "snapshot_20160312"
-    mappings = "${mcp_mappings}"
-
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-
-    // Replace
-    replace '@MOD_VERSION@', "${mod_version}" + buildNumber()
-    replace '@MOD_SIGNATURE@', project.findProperty('mod_signature')
-    replaceIn 'Cyberware.java'
-}
-
-dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/ddependency_management.html
-
-    // SSH
-    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
-
-    // PrimalCore
-    //deobfCompile "nmd.primal.core:PrimalCore:${primal_version}:dev"
-    //runtime "nmd.primal.core:PrimalCore:${primal_version}"
-
-    // JEI
-    //  https://github.com/mezz/JustEnoughItems
-    //  http://minecraft.curseforge.com/projects/just-enough-items-jei/files
-    //  <MINECRAFT-VERSION> and <JEI-VERSION> can be found on CurseForge, check the file name of the version you want.
-    //
-    // compile against the JEI API
-    // http://dvs1.progwml6.com/files/maven/mezz/jei/jei_1.11.2/4.3.3.266/jei_1.11.2-4.3.3.266-api.jar
-    provided "mezz.jei:jei_${mc_version}:${jei_version}:api"
-    // at runtime, use the full JEI jar
-    //runtime "mezz.jei:jei_${mc_version}:${jei_version}"
-
-    // Baubles
-//    provided "com.github.azanor:baubles:-SNAPSHOT"
-
-    // Matter Overdrive 
-    // provided "matteroverdrive:MatterOverdrive-1.12.2:${MatterOverdrive_version}:universal"
-    provided curse.resolve("matteroverdrive", "${MatterOverdrive_fileid}") // "${MatterOverdrive_version}"
-
-    // EnderIO with a manual dependency to EnderCore
-//    provided "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:core"
-//    provided("com.enderio:EnderIO:${mc_version}-${enderio_version}") {
-//        transitive = false
-//    }
-
-    // ToughAsNails
-    provided "tough-as-nails:ToughAsNails-1.12.2:${tan_version}:universal"
-
-    // TESLA
-    // https://github.com/Darkhax-Minecraft/Tesla/blob/master/README.md
-    provided "net.darkhax.tesla:Tesla-1.12.2:${tesla_version}"
-
-    // RF
-    provided "cofh:RedstoneFlux:1.12-2.0.2.3:universal"
-
-    // Botania
-    provided "vazkii.botania:Botania:${botania_version}"
-}
-
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", "${mod_version}"
-    inputs.property "build", "${mod_build}"
-    inputs.property "mcversion", "${mc_version}"
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':"${mod_version}", 'build':"${mod_build}", 'mcversion':"${mc_version}"
-    }
-
-    // copy everything else, not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings loom.officialMojangMappings()
     }
 }
 
-idea { module { inheritOutputDirs = true } }
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-jar {
-    exclude "**/TODO.txt"
-    exclude "**/update-dist.json"
-    destinationDir = file 'output'
-    
-    manifest {
-        attributes FMLAT: "cyberware_at.cfg"
-    }
-}
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
+    group = rootProject.maven_group
 
-task devJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
-}
-
-//task deobfJar(type: Jar) {
-//    from sourceSets.main.output
-//    manifest commonManifest
-//    classifier = 'deobf'
-//}
-
-task apiJar(type: Jar) {
-    from(sourceSets.main.allJava) {
-        include 'flaxbeard/cyberware/api/**'
-    }
-    from (sourceSets.main.output) {
-        //include 'LICENSE.txt'
-        include 'flaxbeard/cyberware/api/**'
-    }
-    classifier = 'api'
-}
-
-artifacts {
-    archives devJar
-    archives apiJar
-}
-
-def buildNumber() {
-    return (project.mod_build!="" && project.mod_build!="0") ? '.' + project.mod_build : ""
-}
-
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    // Skip the task if our secret data isn't available
-    onlyIf {
-        project.hasProperty('keyStore')
+    repositories {
     }
 
-    // findProperty allows us to reference the property without it existing
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-}
-
-build.dependsOn signJar
-
-idea {
-    module {
-        inheritOutputDirs = true
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
     }
-}
 
-runClient {
-    jvmArgs "-Xmx2048m", "-Xms1024m", "-ea"
-}
-
-runServer {
-    jvmArgs "-Xmx2048m", "-Xms1024m", "-ea"
+    java {
+        withSourcesJar()
+    }
 }
