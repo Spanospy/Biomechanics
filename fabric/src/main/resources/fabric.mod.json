@@ -21,8 +21,7 @@
     ]
   },
   "mixins": [
-    "cyberware.mixins.json",
-    "cyberware-common.mixins.json"
+    "cyberware.mixins.json"
   ],
   "depends": {
     "fabric": "*",

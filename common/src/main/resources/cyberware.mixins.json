@@ -1,11 +1,13 @@
 {
   "required": true,
-  "package": "net.examplemod.mixin.forge",
+  "package": "flaxbeard.cyberware.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
+    "AbilitiesMixin",
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
