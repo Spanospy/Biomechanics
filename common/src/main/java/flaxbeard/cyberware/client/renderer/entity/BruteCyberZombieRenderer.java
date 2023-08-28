@@ -19,6 +19,7 @@ public class BruteCyberZombieRenderer extends MobRenderer<BruteCyberZombie, Huma
                 context.bakeLayer(ModelLayers.ZOMBIE)
         ), 1.5F);
         this.addLayer(new BruteCyberZombieLayer(this));
+        this.shadowRadius = 1F;
     }
 
     @Override

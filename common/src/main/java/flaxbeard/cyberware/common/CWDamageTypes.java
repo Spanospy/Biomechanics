@@ -17,6 +17,4 @@ public class CWDamageTypes {
     public static final RegistrySupplier<DamageType> NO_POWER_HEART = DAMAGE_TYPES.register(
             new ResourceLocation(MODID, "no_power_heart"), () -> new DamageType("no_power_heart", 0f)
     );
-
-    public static void init() {}
 }

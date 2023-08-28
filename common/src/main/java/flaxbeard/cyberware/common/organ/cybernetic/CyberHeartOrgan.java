@@ -11,7 +11,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
-public class CyberHeartOrgan extends HeartOrgan implements IPowerConsuming {
+public class CyberHeartOrgan extends HeartOrgan implements IPowerConsuming, ICybernetic {
     public CyberHeartOrgan() {
         super(OrganSlots.HEART, new Organ[]{Organs.HEART}, "cyber_heart");
     }

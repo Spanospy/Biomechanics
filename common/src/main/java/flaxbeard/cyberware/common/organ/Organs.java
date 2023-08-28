@@ -1,8 +1,11 @@
 package flaxbeard.cyberware.common.organ;
 
+import flaxbeard.cyberware.client.CWCreativeTabs;
 import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
 import flaxbeard.cyberware.common.organ.cybernetic.CyberHeartOrgan;
+import flaxbeard.cyberware.common.organ.cybernetic.ICybernetic;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +21,18 @@ public class Organs {
 
     public static void register(){
         for (Organ organ : organMap.values()) {
-            ITEMS.register(new ResourceLocation(MODID, organ.name), () -> new OrganItem(organ));
+            if (organ instanceof ICybernetic){
+                organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
+                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.MANUFACTURED_TAB))
+                ).get();
+                organ.salvagedItem = ITEMS.register(new ResourceLocation(MODID, "salvaged_" + organ.name),
+                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.SALVAGED_TAB))
+                ).get();
+            }else {
+                organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
+                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.BIOLOGICAL_TAB))
+                ).get();
+            }
         }
     }
 
