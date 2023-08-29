@@ -3,7 +3,7 @@ package flaxbeard.cyberware.common.organ;
 import flaxbeard.cyberware.client.creativetab.CWCreativeTabs;
 import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
 import flaxbeard.cyberware.common.organ.cybernetic.CyberHeartOrgan;
-import flaxbeard.cyberware.common.organ.cybernetic.ICybernetic;
+import flaxbeard.cyberware.common.organ.cybernetic.SalvagedCyberHeartOrgan;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
@@ -18,21 +18,13 @@ public class Organs {
 
     public static final Organ HEART = new HeartOrgan();
     public static final Organ CYBER_HEART = new CyberHeartOrgan();
+    public static final Organ SALVAGED_CYBER_HEART = new SalvagedCyberHeartOrgan();
 
     public static void register(){
         for (Organ organ : organMap.values()) {
-            if (organ instanceof ICybernetic){
-                organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
-                ).get();
-                organ.salvagedItem = ITEMS.register(new ResourceLocation(MODID, "salvaged_" + organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
-                ).get();
-            }else {
-                organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
-                ).get();
-            }
+            organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
+                    () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
+            ).get();
         }
     }
 

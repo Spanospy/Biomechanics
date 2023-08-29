@@ -2,7 +2,9 @@ package flaxbeard.cyberware.common.data;
 
 import flaxbeard.cyberware.common.organ.Organ;
 import flaxbeard.cyberware.common.organ.Organs;
-import flaxbeard.cyberware.common.organ.cybernetic.IPowerStoring;
+import flaxbeard.cyberware.common.organ.cybernetic.interfaces.ICybernetic;
+import flaxbeard.cyberware.common.organ.cybernetic.interfaces.IPowerStoring;
+import flaxbeard.cyberware.common.organ.cybernetic.interfaces.ISalvaged;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
@@ -107,5 +109,20 @@ public class PlayerOrgansData {
         tag.put("organs", listTag);
         tag.putFloat("storedPower", storedPower);
         compoundTag.put("cyberware", tag);
+    }
+
+    public int getTolerance() {
+        int tolerance = 100;
+        for (Organ organ : cyberwares.keySet()) {
+            int toleranceCost = 0;
+            if (organ instanceof ICybernetic) {
+                toleranceCost += ((ICybernetic) organ).getToleranceCost() * cyberwares.get(organ);
+            }
+            if (organ instanceof ISalvaged) {
+                toleranceCost *= ((ISalvaged) organ).getToleranceCostMultiplicator();
+            }
+            tolerance -= toleranceCost;
+        }
+        return tolerance;
     }
 }

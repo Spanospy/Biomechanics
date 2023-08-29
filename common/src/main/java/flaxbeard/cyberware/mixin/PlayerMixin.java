@@ -2,15 +2,16 @@ package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.common.organ.Organ;
-import flaxbeard.cyberware.common.organ.Organs;
 import flaxbeard.cyberware.common.data.PlayerOrgansData;
+import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
+import flaxbeard.cyberware.common.potion.CWEffects;
 import flaxbeard.cyberware.mixininterfaces.IPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,13 +43,21 @@ public abstract class PlayerMixin extends LivingEntity implements IPlayer {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
+        if (isCreative() || isSpectator()) return;
+
+        boolean hasHeart = false;
         for (Organ organ : organsData.getOrgans()) {
-            organ.tick((Player)(LivingEntity) this);
+            organ.tick((Player) (LivingEntity) this);
+            if (organ instanceof HeartOrgan)
+                hasHeart = true;
         }
-        if(!this.isCreative() && !this.isSpectator() && this.isAlive()){
-            if (!organsData.hasCyberware(Organs.CYBER_HEART) && !organsData.hasCyberware(Organs.HEART)) {
-                this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_HEART)), Float.MAX_VALUE);
-            }
+
+        if (!hasHeart) this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_HEART)), Float.MAX_VALUE);
+
+        if (organsData.getTolerance() <= 0) {
+            this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.CYBER_REJECTION)), Float.MAX_VALUE);
+        } else if (organsData.getTolerance() <= 25) {
+            this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
         }
     }
 

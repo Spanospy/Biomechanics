@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.common.organ.cybernetic;
+package flaxbeard.cyberware.common.organ.cybernetic.interfaces;
 
 import flaxbeard.cyberware.mixininterfaces.IPlayer;
 import net.minecraft.world.entity.player.Player;
