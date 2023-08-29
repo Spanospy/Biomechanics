@@ -40,17 +40,21 @@ public abstract class PlayerMixin extends LivingEntity implements IPlayer {
     public PlayerOrgansData getOrgansData() {
         return organsData;
     }
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void init(CallbackInfo info) {
+        organsData.addDefaultOrgans();
+    }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
-        if (isCreative() || isSpectator()) return;
-
         boolean hasHeart = false;
         for (Organ organ : organsData.getOrgans()) {
             organ.tick((Player) (LivingEntity) this);
             if (organ instanceof HeartOrgan)
                 hasHeart = true;
         }
+
+        if (isCreative() || isSpectator()) return;
 
         if (!hasHeart) this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_HEART)), Float.MAX_VALUE);
 
@@ -59,11 +63,6 @@ public abstract class PlayerMixin extends LivingEntity implements IPlayer {
         } else if (organsData.getTolerance() <= 25) {
             this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
         }
-    }
-
-    @Inject(method = "respawn", at = @At("HEAD"))
-    public void respawn(CallbackInfo ci) {;
-        organsData.addDefaultOrgans();
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))

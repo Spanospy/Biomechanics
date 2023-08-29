@@ -15,5 +15,15 @@ public class CyberRejectionEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int i) {
         livingEntity.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.CYBER_REJECTION)), 2.5F);
+        super.applyEffectTick(livingEntity, i);
+    }
+
+    @Override
+    public boolean isDurationEffectTick(int i, int j) {
+        int k = 20 >> j;
+        if (k > 0) {
+            return i % k == 0;
+        }
+        return false;
     }
 }

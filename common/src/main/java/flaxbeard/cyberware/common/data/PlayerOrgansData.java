@@ -111,8 +111,8 @@ public class PlayerOrgansData {
         compoundTag.put("cyberware", tag);
     }
 
-    public int getTolerance() {
-        int tolerance = 100;
+    public float getTolerance() {
+        float tolerance = 100;
         for (Organ organ : cyberwares.keySet()) {
             int toleranceCost = 0;
             if (organ instanceof ICybernetic) {
