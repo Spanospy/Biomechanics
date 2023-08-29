@@ -1,7 +1,14 @@
 {
-  "cyberware.creative_tab.manufactured" : "Manufactured CyberOrgans",
-  "cyberware.creative_tab.salvaged" : "Salvaged CyberOrgans",
+  "cyberware.creative_tab.organs" : "Organs",
+
   "entity.cyberware.brute_cyber_zombie" : "Brute CyberZombie",
   "entity.cyberware.cyber_zombie" : "CyberZombie",
-  "cyberware.creative_tab.biological" : "Biological Organs"
+
+  "item.cyberware.heart" : "Heart",
+  "item.cyberware.cyber_heart" : "CyberHeart",
+  "item.cyberware.salvaged_cyber_heart" : "Salvaged CyberHeart",
+
+  "cyberware.tooltip.salvaged": "Salvaged",
+  "cyberware.tooltip.manufactured": "Manufactured",
+  "cyberware.tooltip.biological": "Biological"
 }

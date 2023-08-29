@@ -3,6 +3,7 @@ package flaxbeard.cyberware;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrarManager;
+import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.common.entity.CWEntities;
 import flaxbeard.cyberware.common.organ.Organs;
 import net.minecraft.core.registries.Registries;
@@ -18,5 +19,6 @@ public class Cyberware {
 	public static void init(){
 		CWEntities.init();
 		Organs.register();
+		CWDamageTypes.init();
 	}
 }

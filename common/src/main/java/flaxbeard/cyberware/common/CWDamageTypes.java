@@ -10,11 +10,8 @@ import static flaxbeard.cyberware.Cyberware.MANAGER;
 import static flaxbeard.cyberware.Cyberware.MODID;
 
 public class CWDamageTypes {
-    public static final Registrar<DamageType> DAMAGE_TYPES = MANAGER.get().get(Registries.DAMAGE_TYPE);
-    public static final RegistrySupplier<DamageType> NO_HEART = DAMAGE_TYPES.register(
-            new ResourceLocation(MODID, "no_heart"), () -> new DamageType("no_heart", 0f)
-    );
-    public static final RegistrySupplier<DamageType> NO_POWER_HEART = DAMAGE_TYPES.register(
-            new ResourceLocation(MODID, "no_power_heart"), () -> new DamageType("no_power_heart", 0f)
-    );
+    public static final DamageType NO_HEART = new DamageType("no_heart", 0f);
+    public static final DamageType NO_POWER_HEART = new DamageType("no_power_heart", 0f);
+
+    public static void init() {}
 }

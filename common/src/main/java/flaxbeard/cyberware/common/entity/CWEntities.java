@@ -1,5 +1,6 @@
 package flaxbeard.cyberware.common.entity;
 
+import dev.architectury.registry.level.biome.BiomeModifications;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import static flaxbeard.cyberware.Cyberware.MANAGER;
@@ -38,11 +40,34 @@ public class CWEntities {
                             .build(new ResourceLocation(MODID, "brute_cyber_zombie").toString())
             );
 
-    public static void init(){
+    public static void init() {
         EntityAttributeRegistry.register(CYBER_ZOMBIE, CyberZombie::createAttributes);
         EntityAttributeRegistry.register(BRUTE_CYBER_ZOMBIE, BruteCyberZombie::createAttributes);
 
         SpawnPlacementRegistry.register(CYBER_ZOMBIE, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
         SpawnPlacementRegistry.register(BRUTE_CYBER_ZOMBIE, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Zombie::checkMobSpawnRules);
+
+        BiomeModifications.addProperties(
+                (biomeContext, properties) -> properties.getSpawnProperties().addSpawn(
+                        MobCategory.MONSTER,
+                        new MobSpawnSettings.SpawnerData(
+                                CWEntities.CYBER_ZOMBIE.get(),
+                                13,
+                                2,
+                                8
+                        )
+                )
+        );
+        BiomeModifications.addProperties(
+                (biomeContext, properties) -> properties.getSpawnProperties().addSpawn(
+                        MobCategory.MONSTER,
+                        new MobSpawnSettings.SpawnerData(
+                                CWEntities.BRUTE_CYBER_ZOMBIE.get(),
+                                6,
+                                1,
+                                4
+                        )
+                )
+        );
     }
 }

@@ -6,7 +6,6 @@
   "client": [
   ],
   "mixins": [
-    "AbilitiesMixin",
     "PlayerMixin"
   ],
   "injectors": {

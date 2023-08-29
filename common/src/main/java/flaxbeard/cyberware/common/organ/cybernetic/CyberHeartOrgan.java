@@ -5,7 +5,8 @@ import flaxbeard.cyberware.common.organ.Organ;
 import flaxbeard.cyberware.common.organ.OrganSlots;
 import flaxbeard.cyberware.common.organ.Organs;
 import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
-import flaxbeard.cyberware.interfaces.CyberwareAbilities;
+import flaxbeard.cyberware.common.data.PlayerOrgansData;
+import flaxbeard.cyberware.mixininterfaces.IPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -18,8 +19,8 @@ public class CyberHeartOrgan extends HeartOrgan implements IPowerConsuming, ICyb
 
     @Override
     public void tick(Player player) {
-        if (((CyberwareAbilities)player).getStoredPower() <= 0) {
-            player.die(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_POWER_HEART.get())));
+        if (((IPlayer)player).getOrgansData().getStoredPower() <= 0) {
+            player.die(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_POWER_HEART)));
         } else {
             this.tickPower(player);
             if (player.hasEffect(MobEffects.WEAKNESS)) {

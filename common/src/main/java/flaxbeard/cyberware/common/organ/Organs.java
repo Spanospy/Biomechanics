@@ -1,6 +1,6 @@
 package flaxbeard.cyberware.common.organ;
 
-import flaxbeard.cyberware.client.CWCreativeTabs;
+import flaxbeard.cyberware.client.creativetab.CWCreativeTabs;
 import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
 import flaxbeard.cyberware.common.organ.cybernetic.CyberHeartOrgan;
 import flaxbeard.cyberware.common.organ.cybernetic.ICybernetic;
@@ -23,14 +23,14 @@ public class Organs {
         for (Organ organ : organMap.values()) {
             if (organ instanceof ICybernetic){
                 organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.MANUFACTURED_TAB))
+                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
                 ).get();
                 organ.salvagedItem = ITEMS.register(new ResourceLocation(MODID, "salvaged_" + organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.SALVAGED_TAB))
+                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
                 ).get();
             }else {
                 organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
-                        () -> new OrganItem(organ, new Item.Properties().arch$tab(CWCreativeTabs.BIOLOGICAL_TAB))
+                        () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
                 ).get();
             }
         }
