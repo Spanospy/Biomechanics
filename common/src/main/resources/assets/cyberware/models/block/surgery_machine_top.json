@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "cyberware:block/surgery_machine_top"
+  }
+}

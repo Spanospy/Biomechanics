@@ -35,7 +35,7 @@ public class CWEntities {
                     new ResourceLocation(MODID, "brute_cyber_zombie"),
                     () -> EntityType.Builder
                             .of(BruteCyberZombie::new, MobCategory.MONSTER)
-                            .sized(0.6F *1.5f, 1.95F *1.5f)
+                            .sized(0.6F *1.25f, 1.95F *1.25f)
                             .clientTrackingRange(10)
                             .build(new ResourceLocation(MODID, "brute_cyber_zombie").toString())
             );

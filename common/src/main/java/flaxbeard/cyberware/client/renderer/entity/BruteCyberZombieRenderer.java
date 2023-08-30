@@ -19,7 +19,7 @@ public class BruteCyberZombieRenderer extends MobRenderer<BruteCyberZombie, Huma
                 context.bakeLayer(ModelLayers.ZOMBIE)
         ), 1.5F);
         this.addLayer(new BruteCyberZombieLayer(this));
-        this.shadowRadius = 1F;
+        this.shadowRadius = 0.75F;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class BruteCyberZombieRenderer extends MobRenderer<BruteCyberZombie, Huma
     }
 
     protected void scale(BruteCyberZombie giant, PoseStack poseStack, float f) {
-        poseStack.scale(1.5f, 1.5f, 1.5f);
+        poseStack.scale(1.25f, 1.25f, 1.25f);
     }
 }

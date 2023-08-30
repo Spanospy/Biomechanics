@@ -1,7 +1,6 @@
 package flaxbeard.cyberware.registry;
 
 import dev.architectury.platform.forge.EventBuses;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;

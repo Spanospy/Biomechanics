@@ -1,5 +1,6 @@
 package flaxbeard.cyberware.common.block;
 
+import flaxbeard.cyberware.common.block.entity.SurgeryMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -24,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,10 +176,9 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
         return FULL_CUBE;
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;
+        return new SurgeryMachineBlockEntity(blockPos, blockState);
     }
 
     public enum SurgeryMachinePart implements StringRepresentable {
