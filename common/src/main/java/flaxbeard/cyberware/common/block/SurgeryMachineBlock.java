@@ -3,6 +3,8 @@ package flaxbeard.cyberware.common.block;
 import flaxbeard.cyberware.common.block.entity.SurgeryMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -90,10 +92,12 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
             case BOTTOM:
                 other2.add(blockPos.above());
                 other2.add(blockPos.above().above());
+                playSoundCloseAndOpenSound(blockPos, level);
                 break;
             case MIDDLE:
                 other2.add(blockPos.below());
                 other2.add(blockPos.above());
+                playSoundCloseAndOpenSound(blockPos.below(), level);
                 break;
             case TOP:
                 //will be added later
@@ -108,6 +112,11 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
         level.setBlockAndUpdate(blockPos, blockState.setValue(OPEN, !open));
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    public void playSoundCloseAndOpenSound(BlockPos blockPos, Level level){
+        boolean open = level.getBlockState(blockPos).getValue(OPEN);
+        level.playSound(null, blockPos, open ? SoundEvents.IRON_DOOR_CLOSE : SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1, 1);
     }
 
     @Override
@@ -178,7 +187,9 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SurgeryMachineBlockEntity(blockPos, blockState);
+        if (blockState.getValue(PART) == SurgeryMachinePart.TOP)
+            return new SurgeryMachineBlockEntity(blockPos, blockState);
+        return null;
     }
 
     public enum SurgeryMachinePart implements StringRepresentable {
