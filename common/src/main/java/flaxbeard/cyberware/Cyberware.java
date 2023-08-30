@@ -14,7 +14,6 @@ import java.util.function.Supplier;
 public class Cyberware {
 	public static final String MODID = "cyberware";
 	public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(MODID));
-	public static final Registrar<Item> ITEMS = MANAGER.get().get(Registries.ITEM);
 
 	public static void init(){
 		CWEffects.init();

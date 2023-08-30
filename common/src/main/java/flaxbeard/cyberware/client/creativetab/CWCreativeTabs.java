@@ -2,6 +2,7 @@ package flaxbeard.cyberware.client.creativetab;
 
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
+import flaxbeard.cyberware.common.item.CWItems;
 import flaxbeard.cyberware.common.organ.Organs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -19,5 +20,10 @@ public class CWCreativeTabs {
             () -> new CreativeModeTab.Builder(CreativeModeTab.Row.BOTTOM, 0).icon(
                     () -> new ItemStack(Organs.HEART.item)
             ).title(Component.translatable("cyberware.creative_tab.organs")).build()
+    );
+    public static final RegistrySupplier<CreativeModeTab> OTHER_TAB = CREATIVE_MODE_TABS.register(new ResourceLocation(MODID, "other_tab"),
+            () -> new CreativeModeTab.Builder(CreativeModeTab.Row.BOTTOM, 1).icon(
+                    () -> new ItemStack(CWItems.SURGERY_MACHINE.get())
+            ).title(Component.translatable("cyberware.creative_tab.other")).build()
     );
 }

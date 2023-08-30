@@ -9,5 +9,6 @@
   "cyberware.tooltip.manufactured": "Manufactured",
   "cyberware.tooltip.biological": "Biological",
   "cyberware.tooltip.powerConsumption": "Power Consumption when Used: ",
-  "cyberware.tooltip.toleranceCost": "Tolerance Cost: "
+  "cyberware.tooltip.toleranceCost": "Tolerance Cost: ",
+  "cyberware.creative_tab.other": "Other"
 }

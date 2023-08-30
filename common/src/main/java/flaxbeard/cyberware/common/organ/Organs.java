@@ -10,8 +10,8 @@ import net.minecraft.world.item.Item;
 import java.util.HashMap;
 import java.util.Map;
 
-import static flaxbeard.cyberware.Cyberware.ITEMS;
 import static flaxbeard.cyberware.Cyberware.MODID;
+import static flaxbeard.cyberware.common.item.CWItems.ITEMS;
 
 public class Organs {
     public static Map<String, Organ> organMap = new HashMap<>();

@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.block;
+package flaxbeard.cyberware.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,12 +13,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -26,11 +26,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class SurgeryMachineBlock extends HorizontalDirectionalBlock implements EntityBlock {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SurgeryMachineBlock extends Block implements EntityBlock {
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<SurgeryMachinePart> PART = EnumProperty.create("part", SurgeryMachinePart.class);
-
-    private static final VoxelShape TOP_PANE = Block.box(0, 15, 0, 16, 16, 16);
     private static final VoxelShape BOTTOM_PANE = Block.box(0, 0, 0, 16, 1, 16);
     private static final VoxelShape NORTH_PANE = Block.box(0, 0, 0, 16, 16, 1);
     private static final VoxelShape SOUTH_PANE = Block.box(0, 0, 15, 16, 16, 16);
@@ -38,11 +40,11 @@ public class SurgeryMachineBlock extends HorizontalDirectionalBlock implements E
     private static final VoxelShape WEST_PANE = Block.box(0, 0, 0, 1, 16, 16);
 
     private static final VoxelShape FULL_CUBE = Block.box(0, 0, 0, 16, 16, 16);
-    private static final VoxelShape CLOSED_MIDDLE = Shapes.or(TOP_PANE, NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
-    private static final VoxelShape NORTH_MIDDLE = Shapes.or(TOP_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
-    private static final VoxelShape SOUTH_MIDDLE = Shapes.or(TOP_PANE, NORTH_PANE, EAST_PANE, WEST_PANE);
-    private static final VoxelShape EAST_MIDDLE = Shapes.or(TOP_PANE, NORTH_PANE, SOUTH_PANE, WEST_PANE);
-    private static final VoxelShape WEST_MIDDLE = Shapes.or(TOP_PANE, NORTH_PANE, SOUTH_PANE, EAST_PANE);
+    private static final VoxelShape CLOSED_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
+    private static final VoxelShape NORTH_MIDDLE = Shapes.or(SOUTH_PANE, EAST_PANE, WEST_PANE);
+    private static final VoxelShape SOUTH_MIDDLE = Shapes.or(NORTH_PANE, EAST_PANE, WEST_PANE);
+    private static final VoxelShape EAST_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, WEST_PANE);
+    private static final VoxelShape WEST_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE);
     private static final VoxelShape CLOSED_BOTTOM = Shapes.or(BOTTOM_PANE, NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape NORTH_BOTTOM = Shapes.or(BOTTOM_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape SOUTH_BOTTOM = Shapes.or(BOTTOM_PANE, NORTH_PANE, EAST_PANE, WEST_PANE);
@@ -60,7 +62,7 @@ public class SurgeryMachineBlock extends HorizontalDirectionalBlock implements E
         BlockState blockStateMid = level.getBlockState(blockPos.above());
         BlockState blockStateTop = level.getBlockState(blockPos.above().above());
         if (blockStateMid.canBeReplaced(blockPlaceContext) && blockStateTop.canBeReplaced(blockPlaceContext))
-            return this.defaultBlockState().setValue(FACING, blockPlaceContext.getHorizontalDirection()).setValue(PART, SurgeryMachinePart.BOTTOM);
+            return this.defaultBlockState().setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite()).setValue(PART, SurgeryMachinePart.BOTTOM).setValue(OPEN, false);
         return null;
     }
 
@@ -70,8 +72,8 @@ public class SurgeryMachineBlock extends HorizontalDirectionalBlock implements E
         if (!level.isClientSide){
             BlockPos blockPosMid = blockPos.above();
             BlockPos blockPosTop = blockPosMid.above();
-            level.setBlockAndUpdate(blockPosMid, blockState.setValue(PART, SurgeryMachinePart.MIDDLE).setValue(FACING, blockState.getValue(FACING)));
-            level.setBlockAndUpdate(blockPosTop, blockState.setValue(PART, SurgeryMachinePart.TOP).setValue(FACING, blockState.getValue(FACING)));
+            level.setBlockAndUpdate(blockPosMid, blockState.setValue(PART, SurgeryMachinePart.MIDDLE).setValue(FACING, blockState.getValue(FACING)).setValue(OPEN, false));
+            level.setBlockAndUpdate(blockPosTop, blockState.setValue(PART, SurgeryMachinePart.TOP).setValue(FACING, blockState.getValue(FACING)).setValue(OPEN, false));
         }
     }
 
@@ -82,34 +84,56 @@ public class SurgeryMachineBlock extends HorizontalDirectionalBlock implements E
 
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (blockState.getValue(PART) != SurgeryMachinePart.TOP) {
-            if (blockState.getValue(PART) == SurgeryMachinePart.BOTTOM){
-                boolean open = blockState.getValue(OPEN);
-                BlockPos blockPosMid = blockPos.above();
-                BlockState blockStateMid = level.getBlockState(blockPosMid);
-                BlockState blockStateTop = level.getBlockState(blockPosMid.above());
-                blockStateMid.setValue(OPEN, !open);
-                blockStateTop.setValue(OPEN, !open);
-                blockState.setValue(OPEN, !open);
-                level.setBlockAndUpdate(blockPosMid, blockStateMid);
-                level.setBlockAndUpdate(blockPosMid.above(), blockStateTop);
-                level.setBlockAndUpdate(blockPos, blockState);
-            }else {
-                BlockPos blockPosBottom = blockPos.below();
-                BlockState blockStateBottom = level.getBlockState(blockPosBottom);
-                BlockState blockStateMid = level.getBlockState(blockPos);
-                BlockState blockStateTop = level.getBlockState(blockPos.above());
-                blockStateBottom.setValue(OPEN, !blockStateBottom.getValue(OPEN));
-                blockStateMid.setValue(OPEN, !blockStateMid.getValue(OPEN));
-                blockStateTop.setValue(OPEN, !blockStateTop.getValue(OPEN));
-                level.setBlockAndUpdate(blockPosBottom, blockStateBottom);
-                level.setBlockAndUpdate(blockPos, blockStateMid);
-                level.setBlockAndUpdate(blockPos.above(), blockStateTop);
+        boolean open = blockState.getValue(OPEN);
+        List<BlockPos> other2 = new ArrayList<>();
+        switch (blockState.getValue(PART)){
+            case BOTTOM:
+                other2.add(blockPos.above());
+                other2.add(blockPos.above().above());
+                break;
+            case MIDDLE:
+                other2.add(blockPos.below());
+                other2.add(blockPos.above());
+                break;
+            case TOP:
+                //will be added later
+                return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        for (BlockPos pos : other2){
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof SurgeryMachineBlock){
+                level.setBlockAndUpdate(pos, state.setValue(OPEN, !open));
             }
         }
-        else {}
+        level.setBlockAndUpdate(blockPos, blockState.setValue(OPEN, !open));
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+        List<BlockPos> other2 = new ArrayList<>();
+        switch (blockState.getValue(PART)){
+            case BOTTOM:
+                other2.add(blockPos.above());
+                other2.add(blockPos.above().above());
+                break;
+            case MIDDLE:
+                other2.add(blockPos.below());
+                other2.add(blockPos.above());
+                break;
+            case TOP:
+                other2.add(blockPos.below());
+                other2.add(blockPos.below().below());
+                break;
+        }
+        for (BlockPos pos : other2){
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof SurgeryMachineBlock){
+                level.destroyBlock(pos, false);
+            }
+        }
+        super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     @Override
