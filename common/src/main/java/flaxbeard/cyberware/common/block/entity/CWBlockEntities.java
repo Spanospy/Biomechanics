@@ -16,4 +16,5 @@ public class CWBlockEntities {
             new ResourceLocation(MODID, "surgery_machine"),
             () -> BlockEntityType.Builder.of(SurgeryMachineBlockEntity::new, CWBlocks.SURGERY_MACHINE.get()).build(null)
     );
+    public static void init() {}
 }

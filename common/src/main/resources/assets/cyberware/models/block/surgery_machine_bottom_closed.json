@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "cyberware:block/surgery_machine_bottom_closed",
-		"particle": "cyberware:block/surgery_machine_bottom_closed"
+		"0": "cyberware:block/surgery_machine_bottom",
+		"particle": "cyberware:block/surgery_machine_bottom"
 	},
 	"elements": [
 		{

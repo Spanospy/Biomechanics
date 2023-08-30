@@ -20,7 +20,7 @@ public class Organs {
     public static final Organ CYBER_HEART = new CyberHeartOrgan();
     public static final Organ SALVAGED_CYBER_HEART = new SalvagedCyberHeartOrgan();
 
-    public static void register(){
+    public static void init(){
         for (Organ organ : organMap.values()) {
             organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
                     () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
