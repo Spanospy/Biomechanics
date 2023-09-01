@@ -13,6 +13,4 @@ public enum OrganSlots {
     BONES,
     LEG_LEFT,
     LEG_RIGHT,
-    HAND_LEFT,
-    HAND_RIGHT,
 }

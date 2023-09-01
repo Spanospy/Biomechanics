@@ -16,7 +16,7 @@ import java.util.Map;
 public class PlayerOrgansData {
     private Map<Organ, Integer> cyberwares = new HashMap<>();
     private float storedPower = 0;
-
+    public ModifiedOrgansData modifiedOrgansData = new ModifiedOrgansData();
     public Map<Organ, Integer> getCyberwares() {
         return cyberwares;
     }
@@ -94,6 +94,7 @@ public class PlayerOrgansData {
                 cyberwares.put(organ, nbt.getInt("count"));
             }
         }
+        modifiedOrgansData.readAdditionalSaveData(tag);
         storedPower = tag.getFloat("storedPower");
     }
 
@@ -108,7 +109,25 @@ public class PlayerOrgansData {
         }
         tag.put("organs", listTag);
         tag.putFloat("storedPower", storedPower);
+        modifiedOrgansData.addAdditionalSaveData(tag);
         compoundTag.put("cyberware", tag);
+    }
+
+    public CompoundTag writeToNbt() {
+        CompoundTag compoundTag = new CompoundTag();
+        CompoundTag tag = new CompoundTag();
+        ListTag listTag = new ListTag();
+        for (Organ organ : cyberwares.keySet()) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putString("name", organ.name);
+            nbt.putInt("count", cyberwares.get(organ));
+            listTag.add(nbt);
+        }
+        tag.put("organs", listTag);
+        tag.putFloat("storedPower", storedPower);
+        modifiedOrgansData.addAdditionalSaveData(tag);
+        compoundTag.put("cyberware", tag);
+        return compoundTag;
     }
 
     public float getTolerance() {

@@ -1,8 +1,10 @@
 package flaxbeard.cyberware.common.block;
 
-import flaxbeard.cyberware.common.block.entity.SurgeryMachineBlockEntity;
+import flaxbeard.cyberware.common.packet.CWPackets;
+import flaxbeard.cyberware.common.packet.OpenSurgeryGuiPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -15,8 +17,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,23 +31,39 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SurgeryMachineBlock extends Block implements EntityBlock {
+public class SurgeryMachineBlock extends Block{
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<SurgeryMachinePart> PART = EnumProperty.create("part", SurgeryMachinePart.class);
+
     private static final VoxelShape BOTTOM_PANE = Block.box(0, 0, 0, 16, 1, 16);
     private static final VoxelShape NORTH_PANE = Block.box(0, 0, 0, 16, 16, 1);
     private static final VoxelShape SOUTH_PANE = Block.box(0, 0, 15, 16, 16, 16);
     private static final VoxelShape EAST_PANE = Block.box(15, 0, 0, 16, 16, 16);
     private static final VoxelShape WEST_PANE = Block.box(0, 0, 0, 1, 16, 16);
 
-    private static final VoxelShape FULL_CUBE = Block.box(0, 0, 0, 16, 16, 16);
-    private static final VoxelShape CLOSED_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
+    private static final VoxelShape NORTH_CLOSED = Block.box(0, 0, 1, 16, 16, 2);
+    private static final VoxelShape SOUTH_CLOSED = Block.box(0, 0, 14, 16, 16, 15);
+    private static final VoxelShape EAST_CLOSED = Block.box(14, 0, 0, 15, 16, 16);
+    private static final VoxelShape WEST_CLOSED = Block.box(0, 0, 0, 1, 16, 16);
+
+    private static final VoxelShape SLAB = Block.box(0, 0, 0, 16, 8, 16);
+
+    private static final VoxelShape CLOSED_MIDDLE_NORTH = Shapes.or(SOUTH_PANE, EAST_PANE, WEST_PANE, NORTH_CLOSED);
+    private static final VoxelShape CLOSED_MIDDLE_SOUTH = Shapes.or(NORTH_PANE, EAST_PANE, WEST_PANE, SOUTH_CLOSED);
+    private static final VoxelShape CLOSED_MIDDLE_EAST = Shapes.or(NORTH_PANE, SOUTH_PANE, WEST_PANE, EAST_CLOSED);
+    private static final VoxelShape CLOSED_MIDDLE_WEST = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_CLOSED);
+
+    private static final VoxelShape CLOSED_BOTTOM_NORTH = Shapes.or(SOUTH_PANE, EAST_PANE, WEST_PANE, NORTH_CLOSED, BOTTOM_PANE);
+    private static final VoxelShape CLOSED_BOTTOM_SOUTH = Shapes.or(NORTH_PANE, EAST_PANE, WEST_PANE, SOUTH_CLOSED, BOTTOM_PANE);
+    private static final VoxelShape CLOSED_BOTTOM_EAST = Shapes.or(NORTH_PANE, SOUTH_PANE, WEST_PANE, EAST_CLOSED, BOTTOM_PANE);
+    private static final VoxelShape CLOSED_BOTTOM_WEST = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_CLOSED, BOTTOM_PANE);
+
     private static final VoxelShape NORTH_MIDDLE = Shapes.or(SOUTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape SOUTH_MIDDLE = Shapes.or(NORTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape EAST_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, WEST_PANE);
     private static final VoxelShape WEST_MIDDLE = Shapes.or(NORTH_PANE, SOUTH_PANE, EAST_PANE);
-    private static final VoxelShape CLOSED_BOTTOM = Shapes.or(BOTTOM_PANE, NORTH_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
+
     private static final VoxelShape NORTH_BOTTOM = Shapes.or(BOTTOM_PANE, SOUTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape SOUTH_BOTTOM = Shapes.or(BOTTOM_PANE, NORTH_PANE, EAST_PANE, WEST_PANE);
     private static final VoxelShape EAST_BOTTOM = Shapes.or(BOTTOM_PANE, NORTH_PANE, SOUTH_PANE, WEST_PANE);
@@ -100,7 +116,8 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
                 playSoundCloseAndOpenSound(blockPos.below(), level);
                 break;
             case TOP:
-                //will be added later
+                if (!level.isClientSide)
+                    CWPackets.CHANNEL.sendToPlayer((ServerPlayer) player, new OpenSurgeryGuiPacket(player));
                 return InteractionResult.sidedSuccess(level.isClientSide);
         }
         for (BlockPos pos : other2){
@@ -149,47 +166,58 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         boolean open = blockState.getValue(OPEN);
         SurgeryMachinePart part = blockState.getValue(PART);
-        if (!open){
-            switch (part){
-                case BOTTOM:
-                    return CLOSED_BOTTOM;
-                case MIDDLE:
-                    return CLOSED_MIDDLE;
-            }
-        }
         Direction directionProperty = blockState.getValue(FACING);
-        if (part == SurgeryMachinePart.MIDDLE){
-            switch (directionProperty) {
-                case NORTH:
-                    return NORTH_MIDDLE;
-                case SOUTH:
-                    return SOUTH_MIDDLE;
-                case EAST:
-                    return EAST_MIDDLE;
-                case WEST:
-                    return WEST_MIDDLE;
+
+        if (!open) {
+            if (part == SurgeryMachinePart.BOTTOM) {
+                switch (directionProperty) {
+                    case NORTH:
+                        return CLOSED_BOTTOM_NORTH;
+                    case SOUTH:
+                        return CLOSED_BOTTOM_SOUTH;
+                    case EAST:
+                        return CLOSED_BOTTOM_EAST;
+                    case WEST:
+                        return CLOSED_BOTTOM_WEST;
+                }
+            } else if (part == SurgeryMachinePart.MIDDLE) {
+                switch (directionProperty) {
+                    case NORTH:
+                        return CLOSED_MIDDLE_NORTH;
+                    case SOUTH:
+                        return CLOSED_MIDDLE_SOUTH;
+                    case EAST:
+                        return CLOSED_MIDDLE_EAST;
+                    case WEST:
+                        return CLOSED_MIDDLE_WEST;
+                }
             }
-        }else if (part == SurgeryMachinePart.BOTTOM){
-            switch (directionProperty) {
-                case NORTH:
-                    return NORTH_BOTTOM;
-                case SOUTH:
-                    return SOUTH_BOTTOM;
-                case EAST:
-                    return EAST_BOTTOM;
-                case WEST:
-                    return WEST_BOTTOM;
+        } else {
+            if (part == SurgeryMachinePart.MIDDLE) {
+                switch (directionProperty) {
+                    case NORTH:
+                        return NORTH_MIDDLE;
+                    case SOUTH:
+                        return SOUTH_MIDDLE;
+                    case EAST:
+                        return EAST_MIDDLE;
+                    case WEST:
+                        return WEST_MIDDLE;
+                }
+            } else if (part == SurgeryMachinePart.BOTTOM) {
+                switch (directionProperty) {
+                    case NORTH:
+                        return NORTH_BOTTOM;
+                    case SOUTH:
+                        return SOUTH_BOTTOM;
+                    case EAST:
+                        return EAST_BOTTOM;
+                    case WEST:
+                        return WEST_BOTTOM;
+                }
             }
         }
-
-        return FULL_CUBE;
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        if (blockState.getValue(PART) == SurgeryMachinePart.TOP)
-            return new SurgeryMachineBlockEntity(blockPos, blockState);
-        return null;
+        return SLAB;
     }
 
     public enum SurgeryMachinePart implements StringRepresentable {
@@ -197,7 +225,7 @@ public class SurgeryMachineBlock extends Block implements EntityBlock {
         MIDDLE("middle"),
         BOTTOM("bottom");
 
-        String id;
+        final String id;
         SurgeryMachinePart(String id) {
             this.id = id;
         }
