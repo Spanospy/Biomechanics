@@ -17,9 +17,9 @@ public class CWCreativeTabs {
     public static final Registrar<CreativeModeTab> CREATIVE_MODE_TABS = MANAGER.get().get(Registries.CREATIVE_MODE_TAB);
 
     public static final RegistrySupplier<CreativeModeTab> ORGANS_TAB = CREATIVE_MODE_TABS.register(new ResourceLocation(MODID, "organs_tab"),
-            () -> new CreativeModeTab.Builder(CreativeModeTab.Row.BOTTOM, 0).icon(
+            () -> new CreativeModeTab.Builder(CreativeModeTab.Row.BOTTOM, 0)/*.icon(
                     () -> new ItemStack(Organs.HEART.item)
-            ).title(Component.translatable("cyberware.creative_tab.organs")).build()
+            )*/.title(Component.translatable("cyberware.creative_tab.organs")).build()
     );
     public static final RegistrySupplier<CreativeModeTab> OTHER_TAB = CREATIVE_MODE_TABS.register(new ResourceLocation(MODID, "other_tab"),
             () -> new CreativeModeTab.Builder(CreativeModeTab.Row.BOTTOM, 1).icon(

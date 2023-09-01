@@ -1,58 +1,60 @@
-package flaxbeard.cyberware.common.data;
+package flaxbeard.cyberware.common.playerdata;
 
-import flaxbeard.cyberware.common.organ.Organ;
 import flaxbeard.cyberware.common.organ.Organs;
-import flaxbeard.cyberware.common.organ.cybernetic.interfaces.ICybernetic;
-import flaxbeard.cyberware.common.organ.cybernetic.interfaces.IPowerStoring;
-import flaxbeard.cyberware.common.organ.cybernetic.interfaces.ISalvaged;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static flaxbeard.cyberware.common.organ.Organs.Organ;
+
 public class PlayerOrgansData {
-    private Map<Organ, Integer> cyberwares = new HashMap<>();
+    public static List<Organ> DEFAULTS = new ArrayList<>();
+    private Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
     public ModifiedOrgansData modifiedOrgansData = new ModifiedOrgansData();
-    public Map<Organ, Integer> getCyberwares() {
-        return cyberwares;
+    public Map<Organ, Integer> getCURRENTS() {
+        return CURRENTS;
     }
 
     public List<Organ> getOrgans() {
-        return new ArrayList<>(cyberwares.keySet());
+        return new ArrayList<>(CURRENTS.keySet());
     }
 
     public void addCyberware(Organ organ) {
-        if (cyberwares.containsKey(organ)) {
-            cyberwares.put(organ, cyberwares.get(organ) + 1);
+        if (CURRENTS.containsKey(organ)) {
+            CURRENTS.put(organ, CURRENTS.get(organ) + 1);
         } else {
-            cyberwares.put(organ, 1);
+            CURRENTS.put(organ, 1);
         }
     }
 
     public void removeCyberware(Organ organ) {
-        if (cyberwares.containsKey(organ)) {
-            if (cyberwares.get(organ) > 1) {
-                cyberwares.put(organ, cyberwares.get(organ) - 1);
+        if (CURRENTS.containsKey(organ)) {
+            if (CURRENTS.get(organ) > 1) {
+                CURRENTS.put(organ, CURRENTS.get(organ) - 1);
             } else {
-                cyberwares.remove(organ);
+                CURRENTS.remove(organ);
             }
         }
     }
 
     public boolean hasCyberware(Organ organ) {
-        return cyberwares.containsKey(organ);
+        return CURRENTS.containsKey(organ);
     }
 
     public float getMaxPower() {
         int maxPower = 0;
-        for (Organ organ : cyberwares.keySet()) {
+        /*
+        for (Organ organ : CURRENTS.keySet()) {
             if (organ instanceof IPowerStoring)
                 maxPower += ((IPowerStoring) organ).getMaxPower();
         }
+         */
         return maxPower;
     }
 
@@ -77,21 +79,22 @@ public class PlayerOrgansData {
     }
 
     public void addDefaultOrgans() {
-        cyberwares.clear();
-        addCyberware(Organs.HEART);
+        CURRENTS.clear();
+        for (Organ organ : DEFAULTS)
+            addCyberware(organ);
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (cyberwares.isEmpty()) {
+        if (CURRENTS.isEmpty()) {
             addDefaultOrgans();
         }
         CompoundTag tag = compoundTag.getCompound("cyberware");
         ListTag listTag = tag.getList("organs", 10);
         for (int i = 0; i < listTag.size(); i++) {
             CompoundTag nbt = listTag.getCompound(i);
-            Organ organ = Organs.getOrgan(nbt.getString("name"));
+            Organ organ = Organs.get(new ResourceLocation(nbt.getString("type")));
             if (organ != null) {
-                cyberwares.put(organ, nbt.getInt("count"));
+                CURRENTS.put(organ, nbt.getInt("count"));
             }
         }
         modifiedOrgansData.readAdditionalSaveData(tag);
@@ -101,10 +104,10 @@ public class PlayerOrgansData {
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         CompoundTag tag = new CompoundTag();
         ListTag listTag = new ListTag();
-        for (Organ organ : cyberwares.keySet()) {
+        for (Organs.Organ organ : CURRENTS.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("name", organ.name);
-            nbt.putInt("count", cyberwares.get(organ));
+            nbt.putString("type", Organs.getRegistryName(organ).toString());
+            nbt.putInt("count", CURRENTS.get(organ));
             listTag.add(nbt);
         }
         tag.put("organs", listTag);
@@ -117,10 +120,10 @@ public class PlayerOrgansData {
         CompoundTag compoundTag = new CompoundTag();
         CompoundTag tag = new CompoundTag();
         ListTag listTag = new ListTag();
-        for (Organ organ : cyberwares.keySet()) {
+        for (Organ organ : CURRENTS.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("name", organ.name);
-            nbt.putInt("count", cyberwares.get(organ));
+            nbt.putString("type", Organs.getRegistryName(organ).toString());
+            nbt.putInt("count", CURRENTS.get(organ));
             listTag.add(nbt);
         }
         tag.put("organs", listTag);
@@ -132,14 +135,16 @@ public class PlayerOrgansData {
 
     public float getTolerance() {
         float tolerance = 100;
-        for (Organ organ : cyberwares.keySet()) {
-            int toleranceCost = 0;
+        for (Organ organ : CURRENTS.keySet()) {
+            float toleranceCost = 0;
+            /*
             if (organ instanceof ICybernetic) {
-                toleranceCost += ((ICybernetic) organ).getToleranceCost() * cyberwares.get(organ);
+                toleranceCost += ((ICybernetic) organ).getToleranceCost() * CURRENTS.get(organ);
             }
             if (organ instanceof ISalvaged) {
                 toleranceCost *= ((ISalvaged) organ).getToleranceCostMultiplicator();
             }
+             */
             tolerance -= toleranceCost;
         }
         return tolerance;

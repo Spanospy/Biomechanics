@@ -1,0 +1,13 @@
+{
+  "override": false,
+  "values": [
+    {
+      "id": "cyberware:heart",
+      "slot": "cyberware:heart"
+    },
+    {
+      "id": "cyberware:eyes",
+      "slot": "cyberware:eyes"
+    }
+  ]
+}

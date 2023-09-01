@@ -2,7 +2,7 @@ package flaxbeard.cyberware.common.packet;
 
 import dev.architectury.networking.NetworkManager;
 import flaxbeard.cyberware.client.screen.SurgeryScreen;
-import flaxbeard.cyberware.common.data.PlayerOrgansData;
+import flaxbeard.cyberware.common.playerdata.PlayerOrgansData;
 import flaxbeard.cyberware.mixininterfaces.IPlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

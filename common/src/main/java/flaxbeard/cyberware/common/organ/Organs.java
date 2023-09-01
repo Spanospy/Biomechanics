@@ -1,34 +1,56 @@
 package flaxbeard.cyberware.common.organ;
 
-import flaxbeard.cyberware.client.creativetab.CWCreativeTabs;
-import flaxbeard.cyberware.common.organ.biological.HeartOrgan;
-import flaxbeard.cyberware.common.organ.cybernetic.CyberHeartOrgan;
-import flaxbeard.cyberware.common.organ.cybernetic.SalvagedCyberHeartOrgan;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.player.Player;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static flaxbeard.cyberware.Cyberware.MODID;
-import static flaxbeard.cyberware.common.item.CWItems.ITEMS;
-
 public class Organs {
-    public static Map<String, Organ> organMap = new HashMap<>();
+    public static Map<ResourceLocation, Organ> ORGANS = new HashMap<>();
 
-    public static final Organ HEART = new HeartOrgan();
-    public static final Organ CYBER_HEART = new CyberHeartOrgan();
-    public static final Organ SALVAGED_CYBER_HEART = new SalvagedCyberHeartOrgan();
-
-    public static void init(){
-        for (Organ organ : organMap.values()) {
-            organ.item = ITEMS.register(new ResourceLocation(MODID, organ.name),
-                    () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.maxUpgrades).arch$tab(CWCreativeTabs.ORGANS_TAB))
+    public static void register(){
+        for (Map.Entry<ResourceLocation, Organ> entry : ORGANS.entrySet()) {
+            Organ organ = entry.getValue();
+            /*
+            ITEMS.register(entry.getKey(),
+                    () -> new OrganItem(organ, new Item.Properties().stacksTo(organ.max).arch$tab(CWCreativeTabs.ORGANS_TAB))
             ).get();
+             */
         }
     }
 
-    public static Organ getOrgan(String name){
-        return organMap.get(name);
+    public static Organ get(ResourceLocation resourceLocation){
+        return ORGANS.get(resourceLocation);
+    }
+
+    public static ResourceLocation getRegistryName(Organ organ){
+        for (Map.Entry<ResourceLocation, Organ> entry : ORGANS.entrySet()) {
+            if (entry.getValue().equals(organ)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public static void register(ResourceLocation resourceLocation, Organ organ){
+        ORGANS.put(resourceLocation, organ);
+    }
+
+    public static class Organ {
+        public OrganSlots slot;
+        public int max;
+        public List<Organ> required;
+        public List<Organ> incompatible;
+
+        public Organ(OrganSlots slots, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans){
+            this.slot = slots;
+            this.max = max;
+            this.required = Arrays.stream(requiredOrgans).toList();
+            this.incompatible = Arrays.stream(incompatibleOrgans).toList();
+        }
+        public void tick(Player player){};
     }
 }

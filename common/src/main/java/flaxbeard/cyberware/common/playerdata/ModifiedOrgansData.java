@@ -1,9 +1,10 @@
-package flaxbeard.cyberware.common.data;
+package flaxbeard.cyberware.common.playerdata;
 
-import flaxbeard.cyberware.common.organ.Organ;
+import flaxbeard.cyberware.common.organ.Organs.Organ;
 import flaxbeard.cyberware.common.organ.Organs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,14 +18,14 @@ public class ModifiedOrgansData {
         ListTag listTagToAdd = new ListTag();
         for (Organ organ : toAdd.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("name", organ.name);
+            nbt.putString("name", Organs.getRegistryName(organ).toString());
             nbt.putInt("count", toAdd.get(organ));
             listTagToAdd.add(nbt);
         }
         ListTag listTagToRemove = new ListTag();
         for (Organ organ : toRemove.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("name", organ.name);
+            nbt.putString("name", Organs.getRegistryName(organ).toString());
             nbt.putInt("count", toRemove.get(organ));
             listTagToRemove.add(nbt);
         }
@@ -38,14 +39,14 @@ public class ModifiedOrgansData {
         ListTag listTagToAdd = modifiedOrgans.getList("toAdd", 10);
         for (int i = 0; i < listTagToAdd.size(); i++) {
             CompoundTag nbt = listTagToAdd.getCompound(i);
-            Organ organ = Organs.getOrgan(nbt.getString("name"));
+            Organ organ = Organs.get(new ResourceLocation(nbt.getString("name")));
             int count = nbt.getInt("count");
             toAdd.put(organ, count);
         }
         ListTag listTagToRemove = modifiedOrgans.getList("toRemove", 10);
         for (int i = 0; i < listTagToRemove.size(); i++) {
             CompoundTag nbt = listTagToRemove.getCompound(i);
-            Organ organ = Organs.getOrgan(nbt.getString("name"));
+            Organ organ = Organs.get(new ResourceLocation(nbt.getString("name")));
             int count = nbt.getInt("count");
             toRemove.put(organ, count);
         }
