@@ -5,6 +5,7 @@ import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class Organ {
     public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans){
         this.slot = type;
         this.max = max;
-        this.required = Arrays.stream(requiredOrgans).toList();
-        this.incompatible = Arrays.stream(incompatibleOrgans).toList();
+        this.required = requiredOrgans == null ? new ArrayList<>() : Arrays.stream(requiredOrgans).toList();
+        this.incompatible = incompatibleOrgans == null ? new ArrayList<>() : Arrays.stream(incompatibleOrgans).toList();
     }
 
     public OrganType getType() {

@@ -17,13 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 import static flaxbeard.cyberware.Cyberware.MODID;
+import static flaxbeard.cyberware.common.data.CWDataReloadListeners.DATA_FOLDER;
 
 public class DefaultOrgansDataReloadListener extends SimplePreparableReloadListener<List<Organ>> {
     @Override
     protected List<Organ> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         PlayerOrgansData.DEFAULTS.clear();
 
-        Map<ResourceLocation, Resource> map = resourceManager.listResources(MODID, file -> file.getPath().endsWith("default_organs.json"));
+        Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("default_organs.json"));
         for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()){
             try {
                 JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();

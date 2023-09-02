@@ -5,20 +5,22 @@ import net.minecraft.world.entity.player.Player;
 
 public class OrganType {
     public OrganSlot slot;
+    public boolean onlyOne;
     public Tick tickNotPresent;
     public Tick tickPresent;
 
-    public OrganType(OrganSlot slot, Tick tickNotPresent, Tick tickPresent) {
+    public OrganType(OrganSlot slot, boolean onlyOne, Tick tickNotPresent, Tick tickPresent) {
         this.slot = slot;
+        this.onlyOne = onlyOne;
         this.tickNotPresent = tickNotPresent;
         this.tickPresent = tickPresent;
     }
 
     public void tick(Player player) {
         if (((OrganPlayer) player).getOrgansData().hasOrganType(this)){
-            tickNotPresent.tick(player);
+            if (tickPresent != null) tickPresent.tick(player);
         }else {
-            tickPresent.tick(player);
+            if (tickNotPresent != null) tickNotPresent.tick(player);
         }
     }
 

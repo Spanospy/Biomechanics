@@ -1,7 +1,6 @@
 {
   "override": false,
   "values": [
-    "cyberware:heart",
-    "cyberware:eyes"
+    "cyberware:heart"
   ]
 }

@@ -19,13 +19,6 @@ public class OrganItem extends Item {
         this.organ = organ;
     }
 
-    /**
-     * Creates an OrganItem from an Organ with default properties
-    **/
-    public static OrganItem of(Organ organ) {
-        return new OrganItem(new Properties().stacksTo(organ.getMax()), organ);
-    }
-
     public Organ getOrgan() {
         return organ;
     }

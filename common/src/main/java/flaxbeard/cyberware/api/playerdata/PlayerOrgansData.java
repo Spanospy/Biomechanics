@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class PlayerOrgansData {
     public static List<Organ> DEFAULTS = new ArrayList<>();
+    public static float TOLERANCE = 0;
     private Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
     public ModifiedOrgansData modifiedOrgansData = new ModifiedOrgansData();

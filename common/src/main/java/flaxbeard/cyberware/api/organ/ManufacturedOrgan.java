@@ -4,7 +4,7 @@ import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import net.minecraft.world.entity.player.Player;
 
-public class ManufacturedOrgan extends Organ {
+public class ManufacturedOrgan extends Organ implements TickableOrgan {
     private float toleranceCost;
     private TickAction tickAction;
     private float powerCost;
@@ -24,12 +24,9 @@ public class ManufacturedOrgan extends Organ {
         return powerCost;
     }
 
+    @Override
     public void tick(Player player) {
         tickAction.tick(player);
         OrganPlayer.getOrgansData(player).subStoredPower(powerCost);
-    }
-
-    public interface TickAction {
-        void tick(Player player);
     }
 }
