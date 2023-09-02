@@ -1,6 +1,18 @@
 {
   "override": false,
   "values": [
-    "cyberware:heart"
+    "cyberware:heart",
+    "cyberware:eyes",
+    "cyberware:brain",
+    "cyberware:lungs",
+    "cyberware:stomach",
+    "cyberware:skin",
+    "cyberware:muscle",
+    "cyberware:bones",
+
+    "cyberware:arm_left",
+    "cyberware:arm_right",
+    "cyberware:leg_left",
+    "cyberware:leg_right"
   ]
 }

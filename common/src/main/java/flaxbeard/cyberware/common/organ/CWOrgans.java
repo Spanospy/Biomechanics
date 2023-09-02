@@ -18,7 +18,7 @@ import static flaxbeard.cyberware.Cyberware.MODID;
 public class CWOrgans {
     public static Map<Organ, RegistrySupplier<Item>> ORGANITEMS = new HashMap<>();
 
-    public static final Organ CYBER_HEART = register(
+    public static final Organ HEART = register(
             "heart",
             new Organ(
                     CWOrganTypes.HEART,
@@ -27,6 +27,27 @@ public class CWOrgans {
                     null
             )
     );
+
+    public static final Organ EYES = register(
+            "eyes",
+            new Organ(
+                    CWOrganTypes.EYES,
+                    1,
+                    null,
+                    null
+            )
+    );
+
+    public static final Organ BRAIN = register(
+            "brain",
+            new Organ(
+                    CWOrganTypes.BRAIN,
+                    1,
+                    null,
+                    null
+            )
+    );
+
 
     public static Organ register(String id, Organ organ) {
         OrganRegistry.register(new ResourceLocation(MODID, id), organ);

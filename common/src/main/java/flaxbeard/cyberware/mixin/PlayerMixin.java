@@ -1,19 +1,17 @@
 package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.api.OrganType;
-import flaxbeard.cyberware.api.organ.ManufacturedOrgan;
 import flaxbeard.cyberware.api.organ.Organ;
 import flaxbeard.cyberware.api.organ.TickableOrgan;
 import flaxbeard.cyberware.api.registry.OrganTypeRegistry;
 import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
-import flaxbeard.cyberware.common.potion.CWEffects;
+import flaxbeard.cyberware.common.effect.CWEffects;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,12 +27,6 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
-
-    @Shadow public abstract void die(DamageSource damageSource);
-
-    @Shadow public abstract boolean isCreative();
-
-    @Shadow public abstract boolean isSpectator();
 
     @Shadow public abstract boolean hurt(DamageSource arg, float f);
 

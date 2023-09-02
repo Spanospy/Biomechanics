@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.common.potion;
+package flaxbeard.cyberware.common.effect;
 
 
 import dev.architectury.registry.registries.Registrar;
@@ -16,6 +16,11 @@ public class CWEffects {
     public static RegistrySupplier<MobEffect> CYBER_REJECTION = MOB_EFFECTS.register(
             new ResourceLocation(MODID, "cyber_rejection"),
             CyberRejectionEffect::new
+    );
+
+    public static RegistrySupplier<MobEffect> NO_LUNGS = MOB_EFFECTS.register(
+            new ResourceLocation(MODID, "no_lungs"),
+            NoLungsEffect::new
     );
 
     public static void register() {}

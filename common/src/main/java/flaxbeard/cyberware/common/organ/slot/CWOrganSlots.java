@@ -8,6 +8,9 @@ import static flaxbeard.cyberware.Cyberware.MODID;
 
 public class CWOrganSlots {
     public static final OrganSlot HEART = register("heart");
+    public static final OrganSlot EYES = register("eyes");
+    public static final OrganSlot CRANIUM = register("cranium");
+    public static final OrganSlot LUNGS = register("lungs");
 
     public static OrganSlot register(String id) {
         return register(id, new OrganSlot(new ResourceLocation(MODID, id)));

@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.common.potion;
+package flaxbeard.cyberware.common.effect;
 
 import flaxbeard.cyberware.common.CWDamageTypes;
 import net.minecraft.core.Holder;

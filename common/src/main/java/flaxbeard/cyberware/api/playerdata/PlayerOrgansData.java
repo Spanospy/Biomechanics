@@ -96,9 +96,6 @@ public class PlayerOrgansData {
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (CURRENTS.isEmpty()) {
-            addDefaultOrgans();
-        }
         CompoundTag tag = compoundTag.getCompound("cyberware");
         ListTag listTag = tag.getList("organs", 10);
         for (int i = 0; i < listTag.size(); i++) {

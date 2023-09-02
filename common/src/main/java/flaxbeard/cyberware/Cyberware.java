@@ -10,7 +10,7 @@ import flaxbeard.cyberware.common.organ.CWOrgans;
 import flaxbeard.cyberware.common.organ.slot.CWOrganSlots;
 import flaxbeard.cyberware.common.organ.type.CWOrganTypes;
 import flaxbeard.cyberware.common.packet.CWPackets;
-import flaxbeard.cyberware.common.potion.CWEffects;
+import flaxbeard.cyberware.common.effect.CWEffects;
 
 import java.util.function.Supplier;
 
