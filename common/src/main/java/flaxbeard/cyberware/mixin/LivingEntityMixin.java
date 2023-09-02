@@ -1,7 +1,6 @@
 package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
-import flaxbeard.cyberware.common.organ.type.CWOrganTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,20 +22,20 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "updatingUsingItem", at = @At("HEAD"), cancellable = true)
     private void updatingUsingItem(CallbackInfo info) {
-        if (((LivingEntity)(Object)this) instanceof Player player) {
+        /*if (((LivingEntity)(Object)this) instanceof Player player) {
             if (this.isUsingItem()) {
                 if (((OrganPlayer) player).getOrgansData().hasOrganType(CWOrganTypes.STOMACH) && this.getItemInHand(this.getUsedItemHand()).isEdible()) {
                     info.cancel();
                 }
             }
-        }
+        }*/
     }
 
     @ModifyVariable(method = "hurt", at = @At("HEAD"), argsOnly = true)
     private float hurt(float value) {
-        if (this instanceof OrganPlayer organPlayer)
+        /*if (this instanceof OrganPlayer organPlayer)
             if (!organPlayer.getOrgansData().hasOrganType(CWOrganTypes.SKIN))
-                return value * 1.75F;
+                return value * 1.75F;*/
         return value;
     }
 }

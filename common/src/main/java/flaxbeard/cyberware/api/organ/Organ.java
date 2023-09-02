@@ -42,6 +42,12 @@ public class Organ {
         return required.contains(organ);
     }
 
+    public boolean isIncompatible(Organ organ) {
+        return incompatible.contains(organ);
+    }
+
+
+
     public Component getTooltip() {
         ResourceLocation registryName = OrganRegistry.getRegistryName(this);
         return Component.translatable(registryName.getNamespace() + ".organ." + registryName.getPath() + ".tooltip");

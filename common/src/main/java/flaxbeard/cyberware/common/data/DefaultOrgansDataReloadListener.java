@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
-import static flaxbeard.cyberware.Cyberware.MODID;
 import static flaxbeard.cyberware.common.data.CWDataReloadListeners.DATA_FOLDER;
 
 public class DefaultOrgansDataReloadListener extends SimplePreparableReloadListener<List<Organ>> {
