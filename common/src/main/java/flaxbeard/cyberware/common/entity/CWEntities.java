@@ -4,7 +4,7 @@ import dev.architectury.registry.level.biome.BiomeModifications;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
-import flaxbeard.cyberware.registry.SpawnPlacementRegistry;
+import flaxbeard.cyberware.arch.SpawnPlacementRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -40,7 +40,7 @@ public class CWEntities {
                             .build(new ResourceLocation(MODID, "brute_cyber_zombie").toString())
             );
 
-    public static void init() {
+    public static void register() {
         EntityAttributeRegistry.register(CYBER_ZOMBIE, CyberZombie::createAttributes);
         EntityAttributeRegistry.register(BRUTE_CYBER_ZOMBIE, BruteCyberZombie::createAttributes);
 

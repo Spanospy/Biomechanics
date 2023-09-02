@@ -2,8 +2,8 @@ package flaxbeard.cyberware.common.packet;
 
 import dev.architectury.networking.NetworkManager;
 import flaxbeard.cyberware.client.screen.SurgeryScreen;
-import flaxbeard.cyberware.common.playerdata.PlayerOrgansData;
-import flaxbeard.cyberware.mixininterfaces.IPlayer;
+import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
+import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class OpenSurgeryGuiPacket {
     }
 
     public OpenSurgeryGuiPacket(Player player) {
-        this.data = ((IPlayer) player).getOrgansData();
+        this.data = ((OrganPlayer) player).getOrgansData();
     }
 
     public void encode(FriendlyByteBuf buf) {

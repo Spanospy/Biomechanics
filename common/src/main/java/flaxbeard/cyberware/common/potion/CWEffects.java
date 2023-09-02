@@ -18,5 +18,5 @@ public class CWEffects {
             CyberRejectionEffect::new
     );
 
-    public static void init() {}
+    public static void register() {}
 }

@@ -1,5 +1,6 @@
-package flaxbeard.cyberware.common.organ;
+package flaxbeard.cyberware.api.registry;
 
+import flaxbeard.cyberware.api.OrganSlot;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrganSlots {
+public class OrganSlotRegistry {
     public static final Map<ResourceLocation, OrganSlot> ORGAN_SLOTS = new HashMap<>();
 
     public static void register(ResourceLocation resourceLocation){
@@ -26,12 +27,4 @@ public class OrganSlots {
         return new ArrayList<>(ORGAN_SLOTS.values());
     }
 
-    public static class OrganSlot {
-        public ResourceLocation icon;
-        public OrganSlot(ResourceLocation resourceLocation){
-            this.icon = new ResourceLocation(
-                    resourceLocation.getNamespace(), "textures/gui/organ_slots/" + resourceLocation.getPath() + ".png"
-            );
-        }
-    }
 }

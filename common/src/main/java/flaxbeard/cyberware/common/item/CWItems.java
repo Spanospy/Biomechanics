@@ -15,8 +15,14 @@ import static flaxbeard.cyberware.Cyberware.MODID;
 public class CWItems {
     public static final Registrar<Item> ITEMS = MANAGER.get().get(Registries.ITEM);
 
-    public static final RegistrySupplier<Item> SURGERY_MACHINE = ITEMS.register(
-            new ResourceLocation(MODID, "surgery_machine"),
-            () -> new BlockItem(CWBlocks.SURGERY_MACHINE.get(), new Item.Properties().arch$tab(CWCreativeTabs.OTHER_TAB))
+    public static final RegistrySupplier<Item> SURGERY_MACHINE = register(
+            "surgery_machine",
+            new BlockItem(CWBlocks.SURGERY_MACHINE.get(), new Item.Properties().arch$tab(CWCreativeTabs.OTHER_TAB))
     );
+
+    public static RegistrySupplier<Item> register(String id, Item item) {
+        return ITEMS.register(new ResourceLocation(MODID, id), () -> item);
+    }
+
+    public static void register() {}
 }

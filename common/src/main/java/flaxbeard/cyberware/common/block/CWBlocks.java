@@ -17,4 +17,6 @@ public class CWBlocks {
             new ResourceLocation(MODID, "surgery_machine"),
             () -> new SurgeryMachineBlock(Block.Properties.copy(Blocks.IRON_BLOCK))
     );
+
+    public static void register() {}
 }

@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.registry;
+package flaxbeard.cyberware.arch;
 
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.world.entity.EntityType;

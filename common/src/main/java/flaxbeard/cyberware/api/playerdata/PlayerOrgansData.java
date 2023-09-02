@@ -1,6 +1,8 @@
-package flaxbeard.cyberware.common.playerdata;
+package flaxbeard.cyberware.api.playerdata;
 
-import flaxbeard.cyberware.common.organ.Organs;
+import flaxbeard.cyberware.api.OrganType;
+import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -9,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static flaxbeard.cyberware.common.organ.Organs.Organ;
 
 public class PlayerOrgansData {
     public static List<Organ> DEFAULTS = new ArrayList<>();
@@ -43,8 +43,17 @@ public class PlayerOrgansData {
         }
     }
 
-    public boolean hasCyberware(Organ organ) {
+    public boolean hasOrgan(Organ organ) {
         return CURRENTS.containsKey(organ);
+    }
+
+    public boolean hasOrganType(OrganType type){
+        for (Organ organ : CURRENTS.keySet()) {
+            if (organ.getType().equals(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public float getMaxPower() {
@@ -92,7 +101,7 @@ public class PlayerOrgansData {
         ListTag listTag = tag.getList("organs", 10);
         for (int i = 0; i < listTag.size(); i++) {
             CompoundTag nbt = listTag.getCompound(i);
-            Organ organ = Organs.get(new ResourceLocation(nbt.getString("type")));
+            Organ organ = OrganRegistry.get(new ResourceLocation(nbt.getString("type")));
             if (organ != null) {
                 CURRENTS.put(organ, nbt.getInt("count"));
             }
@@ -104,9 +113,9 @@ public class PlayerOrgansData {
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         CompoundTag tag = new CompoundTag();
         ListTag listTag = new ListTag();
-        for (Organs.Organ organ : CURRENTS.keySet()) {
+        for (Organ organ : CURRENTS.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("type", Organs.getRegistryName(organ).toString());
+            nbt.putString("type", OrganRegistry.getRegistryName(organ).toString());
             nbt.putInt("count", CURRENTS.get(organ));
             listTag.add(nbt);
         }
@@ -122,7 +131,7 @@ public class PlayerOrgansData {
         ListTag listTag = new ListTag();
         for (Organ organ : CURRENTS.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("type", Organs.getRegistryName(organ).toString());
+            nbt.putString("type", OrganRegistry.getRegistryName(organ).toString());
             nbt.putInt("count", CURRENTS.get(organ));
             listTag.add(nbt);
         }

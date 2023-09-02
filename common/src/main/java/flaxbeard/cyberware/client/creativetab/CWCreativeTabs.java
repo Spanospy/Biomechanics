@@ -3,7 +3,6 @@ package flaxbeard.cyberware.client.creativetab;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import flaxbeard.cyberware.common.item.CWItems;
-import flaxbeard.cyberware.common.organ.Organs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

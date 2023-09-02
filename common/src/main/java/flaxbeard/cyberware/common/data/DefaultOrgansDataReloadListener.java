@@ -2,9 +2,9 @@ package flaxbeard.cyberware.common.data;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import flaxbeard.cyberware.common.organ.Organs.Organ;
-import flaxbeard.cyberware.common.organ.Organs;
-import flaxbeard.cyberware.common.playerdata.PlayerOrgansData;
+import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
+import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -33,7 +33,7 @@ public class DefaultOrgansDataReloadListener extends SimplePreparableReloadListe
                 }
 
                 root.get("values").getAsJsonArray().forEach(jsonElement -> {
-                    Organ organ = Organs.get(new ResourceLocation(jsonElement.getAsString()));
+                    Organ organ = OrganRegistry.get(new ResourceLocation(jsonElement.getAsString()));
                     PlayerOrgansData.DEFAULTS.add(organ);
                 });
 

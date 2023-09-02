@@ -1,6 +1,5 @@
-package flaxbeard.cyberware.registry;
+package flaxbeard.cyberware.arch.fabric;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -8,9 +7,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.function.Supplier;
 
-public class SpawnPlacementRegistry {
-    @ExpectPlatform
+
+public class SpawnPlacementRegistryImpl {
     public static <T extends Mob> void register(Supplier<? extends EntityType<T>> entityType, SpawnPlacements.Type type, Heightmap.Types heightmapType, SpawnPlacements.SpawnPredicate<T> spawnPredicate) {
-        throw new AssertionError();
+        SpawnPlacements.register(entityType.get(), type, heightmapType, spawnPredicate);
     }
 }

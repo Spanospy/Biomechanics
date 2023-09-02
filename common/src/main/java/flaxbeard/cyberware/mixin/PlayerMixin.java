@@ -1,10 +1,13 @@
 package flaxbeard.cyberware.mixin;
 
+import flaxbeard.cyberware.api.OrganType;
+import flaxbeard.cyberware.api.organ.ManufacturedOrgan;
+import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.registry.OrganTypeRegistry;
 import flaxbeard.cyberware.common.CWDamageTypes;
-import flaxbeard.cyberware.common.organ.Organs.Organ;
-import flaxbeard.cyberware.common.playerdata.PlayerOrgansData;
+import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
 import flaxbeard.cyberware.common.potion.CWEffects;
-import flaxbeard.cyberware.mixininterfaces.IPlayer;
+import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends LivingEntity implements IPlayer {
+public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
@@ -47,22 +50,14 @@ public abstract class PlayerMixin extends LivingEntity implements IPlayer {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
-        boolean hasHeart = false;
-        boolean hasEyes = false;
         for (Organ organ : organsData.getOrgans()) {
-            organ.tick((Player) (LivingEntity) this);
-            /*
-            if (organ instanceof HeartOrgan)
-                hasHeart = true;
-            if (organ instanceof EyesOrgan)
-                hasEyes = true;
-             */
+            if (organ instanceof ManufacturedOrgan manufacturedOrgan)
+                manufacturedOrgan.tick((Player)(Object) this);
         }
 
-        if (isCreative() || isSpectator()) return;
-
-        if (!hasHeart) this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.NO_HEART)), Float.MAX_VALUE);
-        if (!hasEyes) this.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 25,0 , false, false));
+        for (OrganType organType : OrganTypeRegistry.ORGAN_TYPES.values()) {
+            organType.tick((Player)(Object) this);
+        }
 
         if (organsData.getTolerance() <= 0) {
             this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.CYBER_REJECTION)), Float.MAX_VALUE);
