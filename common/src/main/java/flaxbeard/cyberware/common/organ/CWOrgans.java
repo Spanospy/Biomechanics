@@ -20,43 +20,34 @@ public class CWOrgans {
 
     public static final Organ HEART = register(
             "heart",
-            new Organ(
-                    CWOrganTypes.HEART,
-                    1,
-                    null,
-                    null
-            )
+            new Organ(CWOrganTypes.HEART, 1, null, null)
     );
-
     public static final Organ EYES = register(
             "eyes",
-            new Organ(
-                    CWOrganTypes.EYES,
-                    1,
-                    null,
-                    null
-            )
+            new Organ(CWOrganTypes.EYES, 1, null, null)
     );
-
     public static final Organ BRAIN = register(
             "brain",
-            new Organ(
-                    CWOrganTypes.BRAIN,
-                    1,
-                    null,
-                    null
-            )
+            new Organ(CWOrganTypes.BRAIN, 1, null, null)
+    );
+    public static final Organ LUNGS = register(
+            "lungs",
+            new Organ(CWOrganTypes.LUNGS, 1, null, null)
+    );
+    public static final Organ STOMACH = register(
+            "stomach",
+            new Organ(CWOrganTypes.STOMACH, 1, null, null)
     );
 
 
     public static Organ register(String id, Organ organ) {
         OrganRegistry.register(new ResourceLocation(MODID, id), organ);
-        System.out.println("Registered organ " + id);
         ORGANITEMS.put(
                 organ,
                 CWItems.register(id, new OrganItem(new Item.Properties().stacksTo(organ.getMax()).arch$tab(CWCreativeTabs.ORGANS_TAB), organ))
         );
         return organ;
     }
+
     public static void register() {}
 }

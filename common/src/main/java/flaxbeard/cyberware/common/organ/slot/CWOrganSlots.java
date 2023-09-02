@@ -11,6 +11,8 @@ public class CWOrganSlots {
     public static final OrganSlot EYES = register("eyes");
     public static final OrganSlot CRANIUM = register("cranium");
     public static final OrganSlot LUNGS = register("lungs");
+    public static final OrganSlot LOWER_ORGANS = register("lower_organs");
+    public static final OrganSlot SKIN = register("skin");
 
     public static OrganSlot register(String id) {
         return register(id, new OrganSlot(new ResourceLocation(MODID, id)));

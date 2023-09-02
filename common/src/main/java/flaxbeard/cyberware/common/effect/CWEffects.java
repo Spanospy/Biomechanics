@@ -18,10 +18,5 @@ public class CWEffects {
             CyberRejectionEffect::new
     );
 
-    public static RegistrySupplier<MobEffect> NO_LUNGS = MOB_EFFECTS.register(
-            new ResourceLocation(MODID, "no_lungs"),
-            NoLungsEffect::new
-    );
-
     public static void register() {}
 }
