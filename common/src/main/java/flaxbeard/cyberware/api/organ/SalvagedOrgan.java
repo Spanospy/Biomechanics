@@ -13,7 +13,7 @@ public class SalvagedOrgan extends ManufacturedOrgan {
                 organ.getMax(),
                 organ.getRequired().toArray(new Organ[0]),
                 organ.getIncompatible().toArray(new Organ[0]),
-                organ.getToleranceCost(),
+                organ.getToleranceCost() * 1.5f,
                 organ.getPowerCost(),
                 organ::tick
         );
