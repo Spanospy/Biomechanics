@@ -7,7 +7,8 @@
   ],
   "mixins": [
     "LivingEntityMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "SimpleReloadInstanceMixin"
   ],
   "injectors": {
     "defaultRequire": 1
