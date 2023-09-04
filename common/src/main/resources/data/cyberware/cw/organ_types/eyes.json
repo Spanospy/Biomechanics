@@ -1,0 +1,28 @@
+{
+  "only_one": true,
+  "id": "cyberware:eyes",
+  "slots": "cyberware:eyes",
+  "tick_without": [
+    {
+      "condition": [
+        {
+          "get": "cyberware:no_eyes",
+          "invert": true
+        }
+      ],
+      "set": "cyberware:no_eyes",
+      "to": true
+    }
+  ],
+  "tick_with": [
+    {
+      "condition": [
+        {
+          "get": "cyberware:no_eyes"
+        }
+      ],
+      "set": "cyberware:no_eyes",
+      "to": false
+    }
+  ]
+}

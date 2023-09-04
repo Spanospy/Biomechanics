@@ -2,7 +2,6 @@ package flaxbeard.cyberware.api.playerdata;
 
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.organ.Organ;
-import flaxbeard.cyberware.api.organ.ToleranceCostingOrgan;
 import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,9 +18,6 @@ public class PlayerOrgansData {
     private Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
     public ModifiedOrgansData modifiedOrgansData = new ModifiedOrgansData();
-    public Map<Organ, Integer> getCURRENTS() {
-        return CURRENTS;
-    }
 
     public List<Organ> getOrgans() {
         return new ArrayList<>(CURRENTS.keySet());
@@ -146,9 +142,7 @@ public class PlayerOrgansData {
         for (Organ organ : CURRENTS.keySet()) {
             float toleranceCost = 0;
 
-            if (organ instanceof ToleranceCostingOrgan) {
-                toleranceCost += ((ToleranceCostingOrgan) organ).getToleranceCost() * CURRENTS.get(organ);
-            }
+            toleranceCost += organ.getToleranceCost() * CURRENTS.get(organ);
 
             tolerance -= toleranceCost;
         }

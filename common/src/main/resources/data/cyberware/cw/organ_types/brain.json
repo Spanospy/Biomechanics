@@ -1,0 +1,8 @@
+{
+  "only_one": true,
+  "id": "cyberware:brain",
+  "slots": "cyberware:cranium",
+  "tick_without": [
+    {"command": "damage @s cyberware:no_brain %max_number%"}
+  ]
+}

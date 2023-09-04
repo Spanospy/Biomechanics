@@ -1,6 +1,6 @@
 {
-  "override": false,
-  "values": [
+  "tolerance": 100,
+  "organs": [
     "cyberware:heart",
     "cyberware:eyes",
     "cyberware:brain",

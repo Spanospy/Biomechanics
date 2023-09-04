@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.common.data;
+package flaxbeard.cyberware.common.data.organ;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,7 +22,7 @@ public class OrganSlotsReloadListener extends SimplePreparableReloadListener<Map
     protected @NotNull Map<ResourceLocation, OrganSlot> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         OrganSlotRegistry.ORGAN_SLOTS.clear();
 
-        Map<ResourceLocation, Resource> map = resourceManager.listResources(ORGANS_FOLDER, file -> file.getPath().endsWith("slots.json"));
+        Map<ResourceLocation, Resource> map = resourceManager.listResources(ORGANS_FOLDER, file -> file.getPath().endsWith("organ_slots.json"));
         for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()) {
             try {
                 JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();

@@ -1,4 +1,4 @@
-package flaxbeard.cyberware.common.data;
+package flaxbeard.cyberware.common.data.organ;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,21 +18,19 @@ import java.util.Map;
 
 import static flaxbeard.cyberware.common.data.CWDataReloadListeners.DATA_FOLDER;
 
-public class DefaultOrgansDataReloadListener extends SimplePreparableReloadListener<List<Organ>> {
+public class DefaultsDataReloadListener extends SimplePreparableReloadListener<List<Organ>> {
     @Override
     protected List<Organ> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         PlayerOrgansData.DEFAULTS.clear();
 
-        Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("default_organs.json"));
+        Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("defaults.json"));
         for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()){
             try {
                 JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();
 
-                if (root.has("override") && root.get("override").getAsBoolean()){
-                    PlayerOrgansData.DEFAULTS.clear();
-                }
+                PlayerOrgansData.TOLERANCE = root.get("tolerance").getAsFloat();
 
-                root.get("values").getAsJsonArray().forEach(jsonElement -> {
+                root.get("organs").getAsJsonArray().forEach(jsonElement -> {
                     Organ organ = OrganRegistry.get(new ResourceLocation(jsonElement.getAsString()));
                     PlayerOrgansData.DEFAULTS.add(organ);
                 });

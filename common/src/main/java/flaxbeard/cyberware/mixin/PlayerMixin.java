@@ -2,24 +2,19 @@ package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.organ.Organ;
-import flaxbeard.cyberware.api.organ.TickableOrgan;
 import flaxbeard.cyberware.api.registry.OrganTypeRegistry;
 import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
 import flaxbeard.cyberware.common.effect.CWEffects;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,8 +43,7 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo info) {
         for (Organ organ : organsData.getOrgans()) {
-            if (organ instanceof TickableOrgan tickableOrgan)
-                tickableOrgan.tick((Player)(Object) this);
+            organ.tick((Player)(Object) this);
         }
 
         for (OrganType organType : OrganTypeRegistry.ORGAN_TYPES.values()) {

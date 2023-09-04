@@ -1,6 +1,6 @@
 {
+  "origin": "cyberware:organic",
   "type": "cyberware:heart",
   "id": "cyberware:heart",
-  "required": [],
-  "incompatible": []
+  "max": 1
 }

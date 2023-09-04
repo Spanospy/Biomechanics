@@ -1,0 +1,28 @@
+{
+  "only_one": true,
+  "id": "cyberware:skin",
+  "slots": "cyberware:skin",
+  "tick_without": [
+    {
+      "condition": [
+        {
+          "get": "cyberware:no_skin",
+          "invert": true
+        }
+      ],
+      "set": "cyberware:no_skin",
+      "to": true
+    }
+  ],
+  "tick_with": [
+    {
+      "condition": [
+        {
+          "get": "cyberware:no_skin"
+        }
+      ],
+      "set": "cyberware:no_skin",
+      "to": false
+    }
+  ]
+}

@@ -1,30 +1,31 @@
 package flaxbeard.cyberware.api;
 
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
+import flaxbeard.cyberware.utils.CommandUtils;
 import net.minecraft.world.entity.player.Player;
 
 public class OrganType {
     public OrganSlot slot;
     public boolean onlyOne;
-    public Tick tickNotPresent;
-    public Tick tickPresent;
+    public String commandTickPresent;
+    public String commandTickNotPresent;
 
-    public OrganType(OrganSlot slot, boolean onlyOne, Tick tickNotPresent, Tick tickPresent) {
+    public OrganType(OrganSlot slot, boolean onlyOne, String commandTickNotPresent, String commandTickPresent) {
         this.slot = slot;
         this.onlyOne = onlyOne;
-        this.tickNotPresent = tickNotPresent;
-        this.tickPresent = tickPresent;
+        this.commandTickNotPresent = commandTickNotPresent;
+        this.commandTickPresent = commandTickPresent;
+    }
+
+    public OrganType(OrganSlot slot, boolean onlyOne) {
+        this(slot, onlyOne, null, null);
     }
 
     public void tick(Player player) {
         if (((OrganPlayer) player).getOrgansData().hasOrganType(this)){
-            if (tickPresent != null) tickPresent.tick(player);
+            if (commandTickPresent != null) CommandUtils.run(commandTickPresent, player);
         }else {
-            if (tickNotPresent != null) tickNotPresent.tick(player);
+            if (commandTickNotPresent != null) CommandUtils.run(commandTickNotPresent, player);
         }
-    }
-
-    public interface Tick {
-        void tick(Player player);
     }
 }
