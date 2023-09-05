@@ -1,6 +1,6 @@
 package flaxbeard.cyberware.api.registry;
 
-import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.common.item.CWItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;

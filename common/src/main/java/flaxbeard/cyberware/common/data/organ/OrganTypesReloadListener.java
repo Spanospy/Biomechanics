@@ -2,6 +2,7 @@ package flaxbeard.cyberware.common.data.organ;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import flaxbeard.cyberware.api.OrganAction;
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.registry.OrganSlotRegistry;
 import flaxbeard.cyberware.api.registry.OrganTypeRegistry;
@@ -35,7 +36,9 @@ public class OrganTypesReloadListener extends SimplePreparableReloadListener<Map
                         new ResourceLocation(root.get("id").getAsString()),
                         () -> new OrganType(
                                 OrganSlotRegistry.get(new ResourceLocation(root.get("slots").getAsString())),
-                                root.get("only_one").getAsBoolean()
+                                root.get("only_one").getAsBoolean(),
+                                OrganAction.fromJson(root.getAsJsonArray("tick_with")),
+                                OrganAction.fromJson(root.getAsJsonArray("tick_without"))
                         )
                 );
             } catch (Exception e) {

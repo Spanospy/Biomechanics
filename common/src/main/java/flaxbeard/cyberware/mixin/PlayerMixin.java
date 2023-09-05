@@ -1,7 +1,7 @@
 package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.api.OrganType;
-import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.registry.OrganTypeRegistry;
 import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;

@@ -1,6 +1,5 @@
-package flaxbeard.cyberware.api.organ;
+package flaxbeard.cyberware.api;
 
-import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.registry.OrganRegistry;
 import flaxbeard.cyberware.utils.CommandUtils;
 import net.minecraft.network.chat.Component;

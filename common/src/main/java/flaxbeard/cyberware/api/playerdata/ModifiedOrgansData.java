@@ -1,6 +1,6 @@
 package flaxbeard.cyberware.api.playerdata;
 
-import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

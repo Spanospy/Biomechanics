@@ -1,28 +1,5 @@
 {
   "only_one": true,
   "id": "cyberware:stomach",
-  "slots": "cyberware:lower_organs",
-  "tick_without": [
-    {
-      "condition": [
-        {
-          "get": "cyberware:no_stomach",
-          "invert": true
-        }
-      ],
-      "set": "cyberware:no_stomach",
-      "to": true
-    }
-  ],
-  "tick_with": [
-    {
-      "condition": [
-        {
-          "get": "cyberware:no_stomach"
-        }
-      ],
-      "set": "cyberware:no_stomach",
-      "to": false
-    }
-  ]
+  "slots": "cyberware:lower_organs"
 }

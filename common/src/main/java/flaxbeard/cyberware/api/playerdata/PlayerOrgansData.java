@@ -1,7 +1,7 @@
 package flaxbeard.cyberware.api.playerdata;
 
 import flaxbeard.cyberware.api.OrganType;
-import flaxbeard.cyberware.api.organ.Organ;
+import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerOrgansData {
-    public static List<Organ> DEFAULTS = new ArrayList<>();
+    public static List<ResourceLocation> DEFAULTS = new ArrayList<>();
     public static float TOLERANCE = 0;
     private Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
@@ -87,8 +87,8 @@ public class PlayerOrgansData {
 
     public void addDefaultOrgans() {
         CURRENTS.clear();
-        for (Organ organ : DEFAULTS)
-            addCyberware(organ);
+        for (ResourceLocation organ : DEFAULTS)
+            addCyberware(OrganRegistry.get(organ));
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {

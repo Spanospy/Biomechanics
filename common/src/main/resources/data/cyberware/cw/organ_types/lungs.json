@@ -1,28 +1,5 @@
 {
   "only_one": true,
   "id": "cyberware:lungs",
-  "slots": "cyberware:lungs",
-  "tick_without": [
-    {
-      "condition": [
-        {
-          "get": "cyberware:no_lungs",
-          "invert": true
-        }
-      ],
-      "set": "cyberware:no_lungs",
-      "to": true
-    }
-  ],
-  "tick_with": [
-    {
-      "condition": [
-        {
-          "get": "cyberware:no_lungs"
-        }
-      ],
-      "set": "cyberware:no_lungs",
-      "to": false
-    }
-  ]
+  "slots": "cyberware:lungs"
 }

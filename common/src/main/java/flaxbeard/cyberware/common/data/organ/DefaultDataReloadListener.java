@@ -2,9 +2,7 @@ package flaxbeard.cyberware.common.data.organ;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import flaxbeard.cyberware.api.organ.Organ;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
-import flaxbeard.cyberware.api.registry.OrganRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -18,9 +16,9 @@ import java.util.Map;
 
 import static flaxbeard.cyberware.common.data.CWDataReloadListeners.DATA_FOLDER;
 
-public class DefaultsDataReloadListener extends SimplePreparableReloadListener<List<Organ>> {
+public class DefaultDataReloadListener extends SimplePreparableReloadListener<List<ResourceLocation>> {
     @Override
-    protected List<Organ> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+    protected List<ResourceLocation> prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         PlayerOrgansData.DEFAULTS.clear();
 
         Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("defaults.json"));
@@ -31,8 +29,7 @@ public class DefaultsDataReloadListener extends SimplePreparableReloadListener<L
                 PlayerOrgansData.TOLERANCE = root.get("tolerance").getAsFloat();
 
                 root.get("organs").getAsJsonArray().forEach(jsonElement -> {
-                    Organ organ = OrganRegistry.get(new ResourceLocation(jsonElement.getAsString()));
-                    PlayerOrgansData.DEFAULTS.add(organ);
+                    PlayerOrgansData.DEFAULTS.add(new ResourceLocation(jsonElement.getAsString()));
                 });
 
             } catch (IOException e) {
@@ -44,5 +41,5 @@ public class DefaultsDataReloadListener extends SimplePreparableReloadListener<L
     }
 
     @Override
-    protected void apply(List<Organ> object, ResourceManager resourceManager, ProfilerFiller profilerFiller) {}
+    protected void apply(List<ResourceLocation> object, ResourceManager resourceManager, ProfilerFiller profilerFiller) {}
 }
