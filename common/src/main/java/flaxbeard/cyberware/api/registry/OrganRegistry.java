@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class OrganRegistry {
-    private static Map<ResourceLocation, Supplier<Organ>> REGISTRY_ORGANS = new HashMap<>();
     public static Map<ResourceLocation, Organ> ORGANS = new HashMap<>();
 
     public static Organ get(ResourceLocation resourceLocation){
@@ -54,13 +53,7 @@ public class OrganRegistry {
         return itemStack;
     }
 
-    public static void register(){
-        for (Map.Entry<ResourceLocation, Supplier<Organ>> entry : REGISTRY_ORGANS.entrySet()) {
-            ORGANS.put(entry.getKey(), entry.getValue().get());
-        }
-    }
-
-    public static void register(ResourceLocation resourceLocation, Supplier<Organ> organ){
-        REGISTRY_ORGANS.put(resourceLocation, organ);
+    public static void register(ResourceLocation resourceLocation, Organ organ){
+        ORGANS.put(resourceLocation, organ);
     }
 }

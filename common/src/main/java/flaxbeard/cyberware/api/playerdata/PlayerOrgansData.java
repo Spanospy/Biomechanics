@@ -1,5 +1,6 @@
 package flaxbeard.cyberware.api.playerdata;
 
+import com.google.gson.JsonObject;
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.registry.OrganRegistry;
@@ -147,5 +148,12 @@ public class PlayerOrgansData {
             tolerance -= toleranceCost;
         }
         return tolerance;
+    }
+
+    public static void setDefaultFromJson(JsonObject object){
+        TOLERANCE = object.get("tolerance").getAsFloat();
+        object.get("organs").getAsJsonArray().forEach(jsonElement -> {
+            DEFAULTS.add(new ResourceLocation(jsonElement.getAsString()));
+        });
     }
 }
