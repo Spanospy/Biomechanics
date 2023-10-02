@@ -1,6 +1,6 @@
 package flaxbeard.cyberware.api;
 
-import flaxbeard.cyberware.api.registry.OrganRegistry;
+import flaxbeard.cyberware.api.registry.CWRegistry;
 import flaxbeard.cyberware.utils.CommandUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -56,7 +56,7 @@ public class Organ {
     }
 
     public Component getTooltip() {
-        ResourceLocation registryName = OrganRegistry.getRegistryName(this);
+        ResourceLocation registryName = CWRegistry.ORGANS.getKey(this);
         return Component.translatable(registryName.getNamespace() + ".organ." + registryName.getPath() + ".tooltip");
     }
 

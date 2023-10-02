@@ -18,18 +18,37 @@ import static flaxbeard.cyberware.common.data.CWDataReloadListeners.DATA_FOLDER;
 public class CWDataReloadListener extends SimplePreparableReloadListener<Object> {
     @Override
     protected Object prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-        PlayerOrgansData.DEFAULTS.clear();
-        Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("defaults.json"));
-        for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()){
-            try {
-                JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();
-                PlayerOrgansData.setDefaultFromJson(root);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        {
+            OrganOriginRegistry.ORGAN_ORGINS.clear();
+            Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("organ_origins.json"));
+            for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()) {
+                try {
+                    JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();
+                    root.getAsJsonArray("values").forEach(jsonElement -> {
+                        String jsonObject = jsonElement.getAsString();
+                        ResourceLocation resourceLocation = new ResourceLocation(jsonObject);
+                        OrganOriginRegistry.register(resourceLocation);
+                    });
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
-
-
+        {
+            OrganSlotRegistry.ORGAN_SLOTS.clear();
+        }
+        {
+            PlayerOrgansData.DEFAULTS.clear();
+            Map<ResourceLocation, Resource> map = resourceManager.listResources(DATA_FOLDER, file -> file.getPath().endsWith("defaults.json"));
+            for (Map.Entry<ResourceLocation, Resource> entry : map.entrySet()) {
+                try {
+                    JsonObject root = JsonParser.parseReader(new InputStreamReader(entry.getValue().open())).getAsJsonObject();
+                    PlayerOrgansData.setDefaultFromJson(root);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         return null;
     }
 

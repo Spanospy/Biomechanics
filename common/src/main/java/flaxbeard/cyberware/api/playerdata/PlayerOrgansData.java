@@ -3,7 +3,7 @@ package flaxbeard.cyberware.api.playerdata;
 import com.google.gson.JsonObject;
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.Organ;
-import flaxbeard.cyberware.api.registry.OrganRegistry;
+import flaxbeard.cyberware.api.registry.CWRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,9 +16,8 @@ import java.util.Map;
 public class PlayerOrgansData {
     public static List<ResourceLocation> DEFAULTS = new ArrayList<>();
     public static float TOLERANCE = 0;
-    private Map<Organ, Integer> CURRENTS = new HashMap<>();
+    private final Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
-    public ModifiedOrgansData modifiedOrgansData = new ModifiedOrgansData();
 
     public List<Organ> getOrgans() {
         return new ArrayList<>(CURRENTS.keySet());
@@ -89,7 +88,7 @@ public class PlayerOrgansData {
     public void addDefaultOrgans() {
         CURRENTS.clear();
         for (ResourceLocation organ : DEFAULTS)
-            addCyberware(OrganRegistry.get(organ));
+            addCyberware(CWRegistry.ORGANS.get(organ));
     }
 
     public void readAdditionalSaveData(CompoundTag compoundTag) {
@@ -97,12 +96,11 @@ public class PlayerOrgansData {
         ListTag listTag = tag.getList("organs", 10);
         for (int i = 0; i < listTag.size(); i++) {
             CompoundTag nbt = listTag.getCompound(i);
-            Organ organ = OrganRegistry.get(new ResourceLocation(nbt.getString("type")));
+            Organ organ = CWRegistry.ORGANS.get(new ResourceLocation(nbt.getString("type")));
             if (organ != null) {
                 CURRENTS.put(organ, nbt.getInt("count"));
             }
         }
-        modifiedOrgansData.readAdditionalSaveData(tag);
         storedPower = tag.getFloat("storedPower");
     }
 
@@ -111,30 +109,18 @@ public class PlayerOrgansData {
         ListTag listTag = new ListTag();
         for (Organ organ : CURRENTS.keySet()) {
             CompoundTag nbt = new CompoundTag();
-            nbt.putString("type", OrganRegistry.getRegistryName(organ).toString());
+            nbt.putString("type", CWRegistry.ORGANS.getKey(organ).toString());
             nbt.putInt("count", CURRENTS.get(organ));
             listTag.add(nbt);
         }
         tag.put("organs", listTag);
         tag.putFloat("storedPower", storedPower);
-        modifiedOrgansData.addAdditionalSaveData(tag);
         compoundTag.put("cyberware", tag);
     }
 
     public CompoundTag writeToNbt() {
         CompoundTag compoundTag = new CompoundTag();
-        CompoundTag tag = new CompoundTag();
-        ListTag listTag = new ListTag();
-        for (Organ organ : CURRENTS.keySet()) {
-            CompoundTag nbt = new CompoundTag();
-            nbt.putString("type", OrganRegistry.getRegistryName(organ).toString());
-            nbt.putInt("count", CURRENTS.get(organ));
-            listTag.add(nbt);
-        }
-        tag.put("organs", listTag);
-        tag.putFloat("storedPower", storedPower);
-        modifiedOrgansData.addAdditionalSaveData(tag);
-        compoundTag.put("cyberware", tag);
+        addAdditionalSaveData(compoundTag);
         return compoundTag;
     }
 
