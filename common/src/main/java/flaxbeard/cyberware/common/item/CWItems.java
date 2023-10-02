@@ -19,10 +19,6 @@ public class CWItems {
             "surgery_machine",
             new BlockItem(CWBlocks.SURGERY_MACHINE.get(), new Item.Properties().arch$tab(CWCreativeTabs.OTHER_TAB))
     );
-    public static final RegistrySupplier<Item> ORGAN = register(
-            "organ",
-            new OrganItem(new Item.Properties())
-    );
 
     public static RegistrySupplier<Item> register(String id, Item item) {
         return ITEMS.register(new ResourceLocation(MODID, id), () -> item);
