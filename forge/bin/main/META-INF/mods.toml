@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+issueTrackerURL = "https://github.com/someElseIsHere/Biomechanics/issues"
+license = "MIT"
+
+[[mods]]
+modId = "cyberware"
+version = "${version}"
+displayName = "Cyberware"
+authors = ["Flaxbeard", "An-Sar", "mallrat208", "LemADEC", "thePlaceholder"]
+description = '''
+Augmentation in Minecraft
+'''
+logoFile = "assets/cyberware/icon.png"
+
+[[dependencies.cyberware]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cyberware]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cyberware]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.1.12,)"
+ordering = "AFTER"
+side = "BOTH"

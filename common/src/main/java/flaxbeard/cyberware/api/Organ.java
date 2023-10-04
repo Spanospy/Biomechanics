@@ -1,7 +1,6 @@
 package flaxbeard.cyberware.api;
 
 import flaxbeard.cyberware.api.registry.CWRegistry;
-import flaxbeard.cyberware.utils.CommandUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +51,7 @@ public class Organ {
     }
 
     public void tick(Player player) {
-        CommandUtils.run(command, player);
+        
     }
 
     public Component getTooltip() {

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "cyberware:block/surgery_machine_top_bottom",
+    "side": "cyberware:block/surgery_machine_top_side",
+    "top": "cyberware:block/surgery_machine_top_top"
+  }
+}

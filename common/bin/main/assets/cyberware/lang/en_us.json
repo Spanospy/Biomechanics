@@ -1,0 +1,15 @@
+{
+  "cyberware.creative_tab.organs": "CyberWare - Organs",
+  "entity.cyberware.brute_cyber_zombie": "Brute CyberZombie",
+  "entity.cyberware.cyber_zombie": "CyberZombie",
+  "item.cyberware.heart": "Heart",
+  "item.cyberware.cyber_heart": "CyberHeart",
+  "item.cyberware.salvaged_cyber_heart": "Salvaged CyberHeart",
+  "cyberware.tooltip.salvaged": "Salvaged",
+  "cyberware.tooltip.manufactured": "Manufactured",
+  "cyberware.tooltip.biological": "Biological",
+  "cyberware.tooltip.powerConsumption": "Power Consumption when Used: ",
+  "cyberware.tooltip.toleranceCost": "Tolerance Cost: ",
+  "cyberware.creative_tab.other": "CyberWare - Other",
+  "cyberware.gui.surgery": "Surgery Monitor"
+}

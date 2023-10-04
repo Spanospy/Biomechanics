@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "cyberware",
+  "version": "${version}",
+  "name": "Cyberware",
+  "description": "Augmentation in Minecraft",
+  "authors": ["Flaxbeard", "An-Sar", "mallrat208", "LemADEC", "thePlaceholder"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/biomechanics",
+    "sources": "https://github.com/someElseIsHere/Biomechanics"
+  },
+  "license": "MIT",
+  "icon": "assets/cyberware/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "flaxbeard.cyberware.CyberwareFabric"
+    ],
+    "client": [
+      "flaxbeard.cyberware.CyberwareFabricClient"
+    ]
+  },
+  "mixins": [
+    "cyberware.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.20.1",
+    "architectury": ">=9.1.12"
+  }
+}

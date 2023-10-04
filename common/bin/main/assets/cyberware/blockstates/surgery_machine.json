@@ -1,0 +1,84 @@
+{
+  "variants": {
+    "part=top": {
+      "model": "cyberware:block/surgery_machine_top"
+    },
+    "open=false,part=middle,facing=north": {
+      "model": "cyberware:block/surgery_machine_middle_closed",
+      "uvlock": true,
+      "y": 180
+    },
+    "open=false,part=middle,facing=south": {
+      "model": "cyberware:block/surgery_machine_middle_closed",
+      "uvlock": true
+    },
+    "open=false,part=middle,facing=east": {
+      "model": "cyberware:block/surgery_machine_middle_closed",
+      "uvlock": true,
+      "y": 270
+    },
+    "open=false,part=middle,facing=west": {
+      "model": "cyberware:block/surgery_machine_middle_closed",
+      "uvlock": true,
+      "y": 90
+    },
+
+    "open=false,part=bottom,facing=north": {
+      "model": "cyberware:block/surgery_machine_bottom_closed",
+      "uvlock": true,
+      "y": 180
+    },
+    "open=false,part=bottom,facing=south": {
+      "model": "cyberware:block/surgery_machine_bottom_closed",
+      "uvlock": true
+    },
+    "open=false,part=bottom,facing=east": {
+      "model": "cyberware:block/surgery_machine_bottom_closed",
+      "uvlock": true,
+      "y": 270
+    },
+    "open=false,part=bottom,facing=west": {
+      "model": "cyberware:block/surgery_machine_bottom_closed",
+      "uvlock": true,
+      "y": 90
+    },
+    "open=true,part=bottom,facing=north": {
+      "model": "cyberware:block/surgery_machine_bottom_opened",
+      "uvlock": true,
+      "y": 180
+    },
+    "open=true,part=bottom,facing=south": {
+      "model": "cyberware:block/surgery_machine_bottom_opened",
+      "uvlock": true
+    },
+    "open=true,part=bottom,facing=east": {
+      "model": "cyberware:block/surgery_machine_bottom_opened",
+      "uvlock": true,
+      "y": 270
+    },
+    "open=true,part=bottom,facing=west": {
+      "model": "cyberware:block/surgery_machine_bottom_opened",
+      "uvlock": true,
+      "y": 90
+    },
+    "open=true,part=middle,facing=north": {
+      "model": "cyberware:block/surgery_machine_middle_opened",
+      "uvlock": true,
+      "y": 180
+    },
+    "open=true,part=middle,facing=south": {
+      "model": "cyberware:block/surgery_machine_middle_opened",
+      "uvlock": true
+    },
+    "open=true,part=middle,facing=east": {
+      "model": "cyberware:block/surgery_machine_middle_opened",
+      "uvlock": true,
+      "y": 270
+    },
+    "open=true,part=middle,facing=west": {
+      "model": "cyberware:block/surgery_machine_middle_opened",
+      "uvlock": true,
+      "y": 90
+    }
+  }
+}

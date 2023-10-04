@@ -4,6 +4,7 @@ import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
+import flaxbeard.cyberware.api.registry.CWRegistry;
 import flaxbeard.cyberware.common.effect.CWEffects;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import net.minecraft.core.Holder;
@@ -45,7 +46,7 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
             organ.tick((Player)(Object) this);
         }
 
-        for (OrganType organType : OrganTypeRegistry.ORGAN_TYPES.values()) {
+        for (OrganType organType : CWRegistry.ORGAN_TYPES.getRegistry().values()) {
             organType.tick((Player)(Object) this);
         }
 

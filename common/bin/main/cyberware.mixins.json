@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "flaxbeard.cyberware.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "LivingEntityMixin",
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
