@@ -45,6 +45,6 @@ local.properties
 .texlipse
 
 # ---> Architectury
-common/bin/
-fabric/bin/
-forge/bin/
+#common/bin/
+#fabric/bin/
+#forge/bin/

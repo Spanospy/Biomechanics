@@ -1,8 +1,0 @@
-{
-  "only_one": true,
-  "id": "cyberware:muscle",
-  "slots": "cyberware:muscle",
-  "tick_without": [
-    {"command": "damage @s cyberware:no_muscle %max_number%"}
-  ]
-}
