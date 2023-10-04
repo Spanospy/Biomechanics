@@ -44,4 +44,7 @@ local.properties
 .target
 .texlipse
 
-## end ##
+# ---> Architectury
+common/bin/
+fabric/bin/
+forge/bin/
