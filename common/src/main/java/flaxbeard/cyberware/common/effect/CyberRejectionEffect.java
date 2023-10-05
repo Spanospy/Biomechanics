@@ -19,7 +19,7 @@ public class CyberRejectionEffect extends MobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int i, int j) {
+    public boolean shouldApplyEffectTickThisTick(int i, int j) {
         int k = 20 >> j;
         if (k > 0) {
             return i % k == 0;

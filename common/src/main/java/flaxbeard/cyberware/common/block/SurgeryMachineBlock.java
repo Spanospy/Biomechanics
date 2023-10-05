@@ -104,21 +104,17 @@ public class SurgeryMachineBlock extends Block{
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         boolean open = blockState.getValue(OPEN);
         List<BlockPos> other2 = new ArrayList<>();
-        switch (blockState.getValue(PART)){
-            case BOTTOM:
+        switch (blockState.getValue(PART)) {
+            case BOTTOM -> {
                 other2.add(blockPos.above());
                 other2.add(blockPos.above().above());
                 playSoundCloseAndOpenSound(blockPos, level);
-                break;
-            case MIDDLE:
+            }
+            case MIDDLE -> {
                 other2.add(blockPos.below());
                 other2.add(blockPos.above());
-                playSoundCloseAndOpenSound(blockPos.below(), level);
-                break;
-            case TOP:
-                if (!level.isClientSide)
-                    CWPackets.CHANNEL.sendToPlayer((ServerPlayer) player, new OpenSurgeryGuiPacket(player));
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                playSoundCloseAndOpenSound(blockPos, level);
+            }
         }
         for (BlockPos pos : other2){
             BlockState state = level.getBlockState(pos);
@@ -139,19 +135,19 @@ public class SurgeryMachineBlock extends Block{
     @Override
     public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         List<BlockPos> other2 = new ArrayList<>();
-        switch (blockState.getValue(PART)){
-            case BOTTOM:
+        switch (blockState.getValue(PART)) {
+            case BOTTOM -> {
                 other2.add(blockPos.above());
                 other2.add(blockPos.above().above());
-                break;
-            case MIDDLE:
+            }
+            case MIDDLE -> {
                 other2.add(blockPos.below());
                 other2.add(blockPos.above());
-                break;
-            case TOP:
+            }
+            case TOP -> {
                 other2.add(blockPos.below());
                 other2.add(blockPos.below().below());
-                break;
+            }
         }
         for (BlockPos pos : other2){
             BlockState state = level.getBlockState(pos);

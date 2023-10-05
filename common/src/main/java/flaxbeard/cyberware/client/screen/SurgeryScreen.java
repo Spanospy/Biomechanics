@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import static flaxbeard.cyberware.Cyberware.MODID;
 
 public class SurgeryScreen extends Screen {
-    PlayerOrgansData actualOrgans;
+    private PlayerOrgansData actualOrgans;
     private static final ResourceLocation BACKGROUND = new ResourceLocation(MODID, "textures/gui/surgery_machine.png");
 
     public SurgeryScreen(PlayerOrgansData data) {
