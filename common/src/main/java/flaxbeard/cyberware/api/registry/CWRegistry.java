@@ -2,7 +2,7 @@ package flaxbeard.cyberware.api.registry;
 
 import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.OrganOrigin;
-import flaxbeard.cyberware.api.OrganSlot;
+import flaxbeard.cyberware.api.OrganSlotType;
 import flaxbeard.cyberware.api.OrganType;
 import net.minecraft.resources.ResourceLocation;
 
@@ -31,7 +31,7 @@ public class CWRegistry<T> {
     }
 
     public static final CWRegistry<OrganOrigin> ORGAN_ORIGINS = new CWRegistry<>();
-    public static final CWRegistry<OrganSlot> ORGAN_SLOTS = new CWRegistry<>();
+    public static final CWRegistry<OrganSlotType> ORGAN_SLOTS = new CWRegistry<>();
     public static final CWRegistry<OrganType> ORGAN_TYPES = new CWRegistry<>();
     public static final CWRegistry<Organ> ORGANS = new CWRegistry<>();
 }

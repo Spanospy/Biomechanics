@@ -6,12 +6,12 @@ import net.minecraft.world.entity.player.Player;
 import java.util.List;
 
 public class OrganType {
-    public OrganSlot slot;
+    public OrganSlotType slot;
     public boolean onlyOne;
     public List<PlayerOrganTick> tickWith;
     public List<PlayerOrganTick> tickWithout;
 
-    public OrganType(OrganSlot slot, boolean onlyOne, List<PlayerOrganTick> tickWithout, List<PlayerOrganTick> tickWith) {
+    public OrganType(OrganSlotType slot, boolean onlyOne, List<PlayerOrganTick> tickWithout, List<PlayerOrganTick> tickWith) {
         this.slot = slot;
         this.onlyOne = onlyOne;
         this.tickWithout = tickWithout;
