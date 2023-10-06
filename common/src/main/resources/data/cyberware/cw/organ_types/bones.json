@@ -1,8 +1,0 @@
-{
-  "only_one": true,
-  "id": "cyberware:bones",
-  "slots": "cyberware:bones",
-  "tick_without": [
-    {"command": "damage @s cyberware:no_bones %max_number%"}
-  ]
-}
