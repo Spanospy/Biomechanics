@@ -32,7 +32,7 @@ public class CWItems {
     public static final HashMap<Organ, OrganItem> ORGAN_ITEMS = new HashMap<>();
     public static void register() {
         for (Map.Entry<ResourceLocation, Organ> organ : CWRegistry.ORGANS.getRegistry().entrySet()) {
-            OrganItem organItem = new OrganItem(new Item.Properties().arch$tab(CWCreativeTabs.OTHER_TAB), organ.getValue());
+            OrganItem organItem = new OrganItem(new Item.Properties().arch$tab(CWCreativeTabs.ORGANS_TAB), organ.getValue());
             ORGAN_ITEMS.put(organ.getValue(), organItem);
             register(organ.getKey().getPath(), organItem);
         }

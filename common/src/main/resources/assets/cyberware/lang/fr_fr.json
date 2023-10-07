@@ -1,3 +1,5 @@
 {
-  "block.cyberware.surgery_machine": "Machine Chirurgicale"
+  "block.cyberware.surgery_machine": "Machine Chirurgicale",
+  "cyberware.creative_tab.organs": "Organes | Cyberware ",
+  "cyberware.creative_tab.other": "Autre | Cyberware"
 }

@@ -18,13 +18,13 @@ public class Cyberware {
 	public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(MODID));
 
 	public static void init(){
+		CWOrganSlotType.register();
+		CWOrganType.register();
+		CWOrgan.register();
+
 		CWEntities.register();
 		CWPackets.register();
 		CWItems.register();
 		CWBlocks.register();
-
-		CWOrganSlotType.register();
-		CWOrganType.register();
-		CWOrgan.register();
 	}
 }
