@@ -14,15 +14,15 @@ public class Organ {
     private int max;
     private List<Organ> required;
     private List<Organ> incompatible;
-    private String command;
     private float toleranceCost;
+    private PlayerOrganTick tick;
 
-    public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans, String command, float toleranceCost){
+    public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans, PlayerOrganTick tick, float toleranceCost){
         this.slot = type;
         this.max = max;
         this.required = requiredOrgans == null ? new ArrayList<>() : Arrays.stream(requiredOrgans).toList();
         this.incompatible = incompatibleOrgans == null ? new ArrayList<>() : Arrays.stream(incompatibleOrgans).toList();
-        this.command = command;
+        this.tick = tick;
         this.toleranceCost = toleranceCost;
     }
 
@@ -51,7 +51,8 @@ public class Organ {
     }
 
     public void tick(Player player) {
-        
+        if (tick != null)
+            tick.tick(player);
     }
 
     public Component getTooltip() {

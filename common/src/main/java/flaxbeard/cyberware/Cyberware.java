@@ -5,6 +5,9 @@ import dev.architectury.registry.registries.RegistrarManager;
 import flaxbeard.cyberware.common.block.CWBlocks;
 import flaxbeard.cyberware.common.entity.CWEntities;
 import flaxbeard.cyberware.common.item.CWItems;
+import flaxbeard.cyberware.common.organ.CWOrgan;
+import flaxbeard.cyberware.common.organ.slot.CWOrganSlotType;
+import flaxbeard.cyberware.common.organ.type.CWOrganType;
 import flaxbeard.cyberware.common.packet.CWPackets;
 
 import java.util.function.Supplier;
@@ -19,5 +22,9 @@ public class Cyberware {
 		CWPackets.register();
 		CWItems.register();
 		CWBlocks.register();
+
+		CWOrganSlotType.register();
+		CWOrganType.register();
+		CWOrgan.register();
 	}
 }

@@ -2,15 +2,11 @@ package flaxbeard.cyberware.mixin;
 
 import flaxbeard.cyberware.api.OrganType;
 import flaxbeard.cyberware.api.Organ;
-import flaxbeard.cyberware.common.CWDamageTypes;
 import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
 import flaxbeard.cyberware.api.registry.CWRegistry;
-import flaxbeard.cyberware.common.effect.CWEffects;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -45,16 +41,17 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
         for (Organ organ : organsData.getOrgans()) {
             organ.tick((Player)(Object) this);
         }
-
         for (OrganType organType : CWRegistry.ORGAN_TYPES.getRegistry().values()) {
             organType.tick((Player)(Object) this);
         }
 
+        /*
         if (organsData.getTolerance() <= 0) {
             this.hurt(new DamageSource(new Holder.Direct<>(CWDamageTypes.CYBER_REJECTION)), Float.MAX_VALUE);
         } else if (organsData.getTolerance() <= PlayerOrgansData.TOLERANCE*(1/4f)) {
             this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
         }
+         */
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
