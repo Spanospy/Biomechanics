@@ -1,8 +1,6 @@
 package flaxbeard.cyberware.common.organ.slot;
 
 import flaxbeard.cyberware.api.OrganSlotType;
-import flaxbeard.cyberware.api.OrganType;
-import flaxbeard.cyberware.api.playerdata.OrganSlot;
 import flaxbeard.cyberware.api.registry.CWRegistry;
 import net.minecraft.resources.ResourceLocation;
 

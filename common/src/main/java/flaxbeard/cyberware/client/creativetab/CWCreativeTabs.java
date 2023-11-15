@@ -2,9 +2,7 @@ package flaxbeard.cyberware.client.creativetab;
 
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
-import flaxbeard.cyberware.api.registry.CWRegistry;
 import flaxbeard.cyberware.common.item.CWItems;
-import flaxbeard.cyberware.common.item.OrganItem;
 import flaxbeard.cyberware.common.organ.CWOrgan;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;

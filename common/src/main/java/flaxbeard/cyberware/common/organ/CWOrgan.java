@@ -2,6 +2,7 @@ package flaxbeard.cyberware.common.organ;
 
 import flaxbeard.cyberware.api.Organ;
 import flaxbeard.cyberware.api.registry.CWRegistry;
+import flaxbeard.cyberware.common.organ.origin.CWOrganOrigin;
 import flaxbeard.cyberware.common.organ.type.CWOrganType;
 import net.minecraft.resources.ResourceLocation;
 
@@ -18,7 +19,8 @@ public class CWOrgan {
             null,
             null,
             null,
-            0
+            0,
+            CWOrganOrigin.ORGANIC
     ));
 
     public static Organ register(String id, Organ organ) {

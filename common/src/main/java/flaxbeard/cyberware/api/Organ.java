@@ -16,14 +16,16 @@ public class Organ {
     private List<Organ> incompatible;
     private float toleranceCost;
     private PlayerOrganTick tick;
+    private OrganOrigin origin;
 
-    public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans, PlayerOrganTick tick, float toleranceCost){
+    public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans, PlayerOrganTick tick, float toleranceCost, OrganOrigin origin){
         this.slot = type;
         this.max = max;
         this.required = requiredOrgans == null ? new ArrayList<>() : Arrays.stream(requiredOrgans).toList();
         this.incompatible = incompatibleOrgans == null ? new ArrayList<>() : Arrays.stream(incompatibleOrgans).toList();
         this.tick = tick;
         this.toleranceCost = toleranceCost;
+        this.origin = origin;
     }
 
     public OrganType getType() {
@@ -48,6 +50,10 @@ public class Organ {
 
     public boolean isIncompatible(Organ organ) {
         return incompatible.contains(organ);
+    }
+
+    public OrganOrigin getOrigin() {
+        return origin;
     }
 
     public void tick(Player player) {
