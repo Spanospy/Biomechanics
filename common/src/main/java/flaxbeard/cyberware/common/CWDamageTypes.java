@@ -9,10 +9,8 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.Level;
 
 public class CWDamageTypes {
-    public static final DamageType NO_HEART = new DamageType("no_heart", 0f);
-    public static final DamageType NO_POWER_HEART = new DamageType("no_power_heart", 0f);
+    public static final ResourceKey<DamageType> NO_HEART = get("no_heart");
     public static final ResourceKey<DamageType> CYBER_REJECTION = get("cyber_rejection");
-    public static final DamageType NO_BRAIN = new DamageType("no_brain", 0f);
 
     public static ResourceKey<DamageType> get(String s){
         return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Cyberware.MODID, s));

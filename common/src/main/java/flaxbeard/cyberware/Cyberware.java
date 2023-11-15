@@ -3,6 +3,7 @@ package flaxbeard.cyberware;
 import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.RegistrarManager;
 import flaxbeard.cyberware.common.block.CWBlocks;
+import flaxbeard.cyberware.common.effect.CWEffects;
 import flaxbeard.cyberware.common.entity.CWEntities;
 import flaxbeard.cyberware.common.item.CWItems;
 import flaxbeard.cyberware.common.organ.CWOrgan;
@@ -26,5 +27,6 @@ public class Cyberware {
 		CWPackets.register();
 		CWItems.register();
 		CWBlocks.register();
+		CWEffects.register();
 	}
 }

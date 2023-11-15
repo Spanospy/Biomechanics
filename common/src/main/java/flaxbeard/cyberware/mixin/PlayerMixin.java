@@ -6,6 +6,7 @@ import flaxbeard.cyberware.api.playerdata.PlayerOrgansData;
 import flaxbeard.cyberware.api.registry.CWRegistry;
 import flaxbeard.cyberware.api.playerdata.OrganPlayer;
 import flaxbeard.cyberware.common.CWDamageTypes;
+import flaxbeard.cyberware.common.effect.CWEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -50,8 +51,8 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
 
         if (organsData.getTolerance() <= 0) {
             this.hurt(CWDamageTypes.of(level(), CWDamageTypes.CYBER_REJECTION), Float.MAX_VALUE);
-        } else if (organsData.getTolerance() <= PlayerOrgansData.TOLERANCE*(1/4f)) {
-            //this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
+        } else if (organsData.getTolerance() <= PlayerOrgansData.TOLERANCE/4f) {
+            this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
         }
     }
 

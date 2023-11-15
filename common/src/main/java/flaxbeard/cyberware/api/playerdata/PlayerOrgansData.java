@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class PlayerOrgansData {
     public static List<ResourceLocation> DEFAULTS = new ArrayList<>();
-    public static float TOLERANCE = 0;
+    public static float TOLERANCE = 100;
     private final Map<Organ, Integer> CURRENTS = new HashMap<>();
     private float storedPower = 0;
 
@@ -134,12 +134,5 @@ public class PlayerOrgansData {
             tolerance -= toleranceCost;
         }
         return tolerance;
-    }
-
-    public static void setDefaultFromJson(JsonObject object){
-        TOLERANCE = object.get("tolerance").getAsFloat();
-        object.get("organs").getAsJsonArray().forEach(jsonElement -> {
-            DEFAULTS.add(new ResourceLocation(jsonElement.getAsString()));
-        });
     }
 }

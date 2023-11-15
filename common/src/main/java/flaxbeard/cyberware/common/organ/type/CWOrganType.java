@@ -22,7 +22,7 @@ public class CWOrganType {
             1,
             (player) -> {
                 if (player.isAlive())
-                    player.hurt(new DamageSource(Holder.direct(CWDamageTypes.NO_HEART)), Float.MAX_VALUE);
+                    player.hurt(CWDamageTypes.of(player.level(), CWDamageTypes.NO_HEART), Float.MAX_VALUE);
             },
             null
     ));

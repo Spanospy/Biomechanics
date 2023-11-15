@@ -10,13 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Organ {
-    private OrganType slot;
-    private int max;
-    private List<Organ> required;
-    private List<Organ> incompatible;
-    private float toleranceCost;
-    private PlayerOrganTick tick;
-    private OrganOrigin origin;
+    private final OrganType slot;
+    private final int max;
+    private final List<Organ> required;
+    private final List<Organ> incompatible;
+    private final float toleranceCost;
+    private final PlayerOrganTick tick;
+    private final OrganOrigin origin;
 
     public Organ(OrganType type, int max, Organ[] requiredOrgans, Organ[] incompatibleOrgans, PlayerOrganTick tick, float toleranceCost, OrganOrigin origin){
         this.slot = type;
