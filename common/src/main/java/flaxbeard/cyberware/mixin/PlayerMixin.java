@@ -52,7 +52,7 @@ public abstract class PlayerMixin extends LivingEntity implements OrganPlayer {
         if (organsData.getTolerance() <= 0) {
             this.hurt(CWDamageTypes.of(level(), CWDamageTypes.CYBER_REJECTION), Float.MAX_VALUE);
         } else if (organsData.getTolerance() <= PlayerOrgansData.TOLERANCE/4f) {
-            this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION.get(), 1, 0, false, false));
+            this.addEffect(new MobEffectInstance(CWEffects.CYBER_REJECTION, 1, 0, false, false));
         }
     }
 

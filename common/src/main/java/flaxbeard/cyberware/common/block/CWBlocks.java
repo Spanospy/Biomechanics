@@ -15,7 +15,7 @@ public class CWBlocks {
 
     public static final RegistrySupplier<Block> SURGERY_MACHINE = BLOCKS.register(
             new ResourceLocation(MODID, "surgery_machine"),
-            () -> new SurgeryMachineBlock(Block.Properties.copy(Blocks.IRON_BLOCK))
+            () -> new SurgeryMachineBlock(Block.Properties.ofFullCopy(Blocks.IRON_BLOCK))
     );
 
     public static void register() {}

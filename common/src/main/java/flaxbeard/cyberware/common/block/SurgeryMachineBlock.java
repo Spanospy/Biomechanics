@@ -1,10 +1,7 @@
 package flaxbeard.cyberware.common.block;
 
-import flaxbeard.cyberware.common.packet.CWPackets;
-import flaxbeard.cyberware.common.packet.OpenSurgeryGuiPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -27,11 +24,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SurgeryMachineBlock extends Block{
+public class SurgeryMachineBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<SurgeryMachinePart> PART = EnumProperty.create("part", SurgeryMachinePart.class);
@@ -101,7 +99,8 @@ public class SurgeryMachineBlock extends Block{
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    @NotNull
+    public InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
         boolean open = blockState.getValue(OPEN);
         List<BlockPos> other2 = new ArrayList<>();
         switch (blockState.getValue(PART)) {
@@ -133,7 +132,8 @@ public class SurgeryMachineBlock extends Block{
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+    @NotNull
+    public BlockState playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         List<BlockPos> other2 = new ArrayList<>();
         switch (blockState.getValue(PART)) {
             case BOTTOM -> {
@@ -155,10 +155,11 @@ public class SurgeryMachineBlock extends Block{
                 level.destroyBlock(pos, false);
             }
         }
-        super.playerWillDestroy(level, blockPos, blockState, player);
+        return super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     @Override
+    @NotNull
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         boolean open = blockState.getValue(OPEN);
         SurgeryMachinePart part = blockState.getValue(PART);
@@ -226,6 +227,7 @@ public class SurgeryMachineBlock extends Block{
             this.id = id;
         }
         @Override
+        @NotNull
         public String getSerializedName() {
             return id;
         }
