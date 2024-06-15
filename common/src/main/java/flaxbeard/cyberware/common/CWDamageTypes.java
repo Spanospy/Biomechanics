@@ -17,6 +17,6 @@ public class CWDamageTypes {
     }
 
     public static DamageSource of(Level level, ResourceKey<DamageType> key){
-        return new DamageSource(level.registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(key));
+        return new DamageSource(level.registryAccess().registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(key));
     }
 }
